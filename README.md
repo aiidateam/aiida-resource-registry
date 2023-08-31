@@ -74,3 +74,10 @@ We highly appreciate help in keeping the configurations up to date and adding ne
  1. Fork this repository
  2. Add your computer / code
  3. Create a Pull Request
+
+ In order to test if your configuration and file/folder structure is correct, you can generate the JSON files locally:
+
+```bash
+pip install -r scripts/requirements.txt
+python scripts/generate_json.py
+```
