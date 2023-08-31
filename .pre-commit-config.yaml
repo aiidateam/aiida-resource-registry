@@ -1,0 +1,12 @@
+---
+repos:
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.4.0 # Use the ref you want to point at
+      hooks:
+          - id: trailing-whitespace
+          - id: check-yaml
+
+    - repo: https://github.com/jumanjihouse/pre-commit-hook-yamlfmt
+      rev: 0.2.3
+      hooks:
+          - id: yamlfmt

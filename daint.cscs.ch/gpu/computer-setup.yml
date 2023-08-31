@@ -10,7 +10,7 @@ num_cores_per_mpiproc: 1
 queue_name: normal
 work_dir: /scratch/snx3000/{username}/aiida/
 mpirun_command: srun -n {tot_num_mpiprocs}
-prepend_text: |
+prepend_text: |-
     ### computer prepend_text start ###
     #SBATCH --partition={{ slurm_partition | default('normal') }}
     #SBATCH --account={{ slurm_account }}
