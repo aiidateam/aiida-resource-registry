@@ -1,0 +1,19 @@
+---
+label: "{{ label | default('daint-mc') }}"
+hostname: daint.cscs.ch
+description: Piz Daint supercomputer at CSCS Lugano, Switzerland, multicore partition.
+transport: core.ssh
+scheduler: core.slurm
+work_dir: /scratch/snx3000/{username}/aiida_run/
+shebang: '#!/bin/bash'
+mpirun_command: srun -n {tot_num_mpiprocs}
+mpiprocs_per_machine: 36
+prepend_text: |
+    #SBATCH --partition={{ slurm_partition | default('normal') }}
+    #SBATCH --account={{ slurm_account }}
+    #SBATCH --constraint=mc
+    #SBATCH --cpus-per-task=1
+    
+    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+    source $MODULESHOME/init/bash
+    ulimit -s unlimited

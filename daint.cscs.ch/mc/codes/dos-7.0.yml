@@ -1,0 +1,9 @@
+---
+label: dos-7.0
+description: QE dos.x compiled for daint-mc
+default_calc_job_plugin: quantumespresso.dos
+filepath_executable: /apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/7.0-CrayIntel-21.09/bin/dos.x
+prepend_text: |
+    module load daint-mc
+    module load QuantumESPRESSO
+append_text: ''

@@ -1,0 +1,3 @@
+---
+safe_interval: 60
+proxy_command: ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22
