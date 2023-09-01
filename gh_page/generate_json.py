@@ -2,14 +2,13 @@ from __future__ import annotations
 
 import yaml
 import json
-import copy
 from pathlib import Path
 
 # Define the path to the repo folder.
 root_path = Path.resolve(Path(__file__) / '..' / '..')
 
 # Define the path to exclude from the parsing.
-EXCLUDE_DOMAIN_FOLDER_LIST = ['scripts', '.github', '.git']
+EXCLUDE_DOMAIN_FOLDER_LIST = ['gh_page', '.github', '.git']
 EXCLUDE_COMPUTER_FOLDER_LIST = ['default', 'codes']
 
 def is_yaml_file(file_path: Path) -> bool:
@@ -77,7 +76,7 @@ def main():
         data[domain] = domain_data
 
     # Store the data in a JSON file.
-    with open(root_path/ 'database.json', 'w') as filep:
+    with open(root_path/ 'gh_page' / 'out' / 'database.json', 'w') as filep:
         json.dump(data, filep, indent=4)
 
 
