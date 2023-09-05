@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import yaml
 import json
+from jsonschema import validate
 from pathlib import Path
 
 # Define the path to the repo folder.
@@ -74,6 +75,15 @@ def main():
             domain_data['default'] = Path.readlink(link).name
 
         data[domain] = domain_data
+
+    # Validate the data.
+    schema = json.loads((root_path / 'gh_page' / 'resource.schema.json').read_text())
+    for domain, domain_data in data.items():
+        try:
+            validate(instance=domain_data, schema=schema)
+        except Exception as e:
+            raise Exception(f"Invalid data for domain: {domain}") from e
+
 
     # Store the data in a JSON file.
     with open(root_path/ 'gh_page' / 'out' / 'database.json', 'w') as filep:
