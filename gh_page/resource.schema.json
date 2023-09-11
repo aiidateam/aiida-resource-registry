@@ -30,21 +30,21 @@
     "computer": {
         "type": "object",
         "properties": {
-            "computer-setup.yml": {
+            "computer-setup": {
                 "$ref": "#/definitions/computer-setup.yml"
             },
-            "computer-configure.yml": {
+            "computer-configure": {
                 "$ref": "#/definitions/computer-configure.yml"
             }
         },
-        "required": ["computer-setup.yml", "computer-configure.yml"],
+        "required": ["computer-setup", "computer-configure"],
         "additionalProperties": false,
         "title": "Computer"
     },
     "code": {
         "type": "object",
         "patternProperties": {
-            ".*\\.yml": {
+            ".*": {
                 "$ref": "#/definitions/code.yml"
             }
         },

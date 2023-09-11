@@ -33,14 +33,15 @@ def parse_config(folder_path, exclude: None | list=None):
     if exclude is None:
         exclude = []
 
-    # XXX: using is_yaml_file() to check if the file is YAML file
     yml_file_lst = [f for f in Path.iterdir(folder_path) if is_yaml_file(f) and f.name not in exclude]
 
     data = dict()
     for f in yml_file_lst:
         with open(f) as fh:
-
-            data[f.name] = yaml.load(fh, Loader=yaml.FullLoader)
+            # key is the file name without the extension
+            suffix = f.suffix
+            key = f.name[:-len(suffix)]
+            data[key] = yaml.load(fh, Loader=yaml.FullLoader)
 
     return data
 
