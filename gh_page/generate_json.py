@@ -90,7 +90,9 @@ def main():
     with open(root_path/ 'gh_page' / 'out' / 'database.json', 'w') as filep:
         json.dump(data, filep, indent=4)
 
-
+    # Schema to out
+    with open(root_path / 'gh_page' / 'out' / 'resource.schema.json', 'w') as filep:
+        json.dump(schema, filep, indent=4)
 
 if "__main__" == __name__:
     main()
