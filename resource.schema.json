@@ -1,0 +1,160 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://raw.githubusercontent.com/unkcpz/aiida-resource-registry/main/gh_page/resource.schema.json",
+    "$ref": "#/definitions/domain",
+    "definitions": {
+        "domain": {
+            "properties": {
+                "default": {
+                    "type": "string"
+                }
+            },
+            "additionalProperties": {
+                "$ref": "#/definitions/resource"
+            }
+        },
+        "resource": {
+            "type": "object",
+            "properties": {
+                "computer": {
+                    "$ref": "#/definitions/computer"
+                },
+                "codes": {
+                    "$ref": "#/definitions/code"
+                }
+            },
+            "required": [
+                "computer",
+                "codes"
+            ],
+            "additionalProperties": false,
+            "title": "Resource"
+        },
+        "computer": {
+            "type": "object",
+            "properties": {
+                "computer-setup": {
+                    "$ref": "#/definitions/computer-setup.yml"
+                },
+                "computer-configure": {
+                    "$ref": "#/definitions/computer-configure.yml"
+                }
+            },
+            "required": [
+                "computer-setup",
+                "computer-configure"
+            ],
+            "additionalProperties": false,
+            "title": "Computer"
+        },
+        "code": {
+            "type": "object",
+            "patternProperties": {
+                ".*": {
+                    "$ref": "#/definitions/code.yml"
+                }
+            },
+            "additionalProperties": false,
+            "title": "Code"
+        },
+        "computer-setup.yml": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "hostname": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "transport": {
+                    "type": "string"
+                },
+                "scheduler": {
+                    "type": "string"
+                },
+                "work_dir": {
+                    "type": "string"
+                },
+                "shebang": {
+                    "type": "string"
+                },
+                "mpirun_command": {
+                    "type": "string"
+                },
+                "mpiprocs_per_machine": {
+                    "type": "integer"
+                },
+                "prepend_text": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "label",
+                "hostname",
+                "description",
+                "transport",
+                "scheduler",
+                "work_dir",
+                "shebang",
+                "mpirun_command",
+                "mpiprocs_per_machine",
+                "prepend_text"
+            ],
+            "additionalProperties": true,
+            "title": "Computer Setup"
+        },
+        "computer-configure.yml": {
+            "type": "object",
+            "properties": {
+                "safe_interval": {
+                    "type": "integer"
+                },
+                "proxy_command": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "safe_interval",
+                "proxy_command"
+            ],
+            "additionalProperties": false,
+            "title": "Computer Configure"
+        },
+        "code.yml": {
+            "type": "object",
+            "properties": {
+                "label": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "default_calc_job_plugin": {
+                    "type": "string"
+                },
+                "filepath_executable": {
+                    "type": "string"
+                },
+                "prepend_text": {
+                    "type": "string"
+                },
+                "append_text": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "label",
+                "description",
+                "default_calc_job_plugin",
+                "filepath_executable",
+                "prepend_text",
+                "append_text"
+            ],
+            "additionalProperties": false,
+            "title": "Code"
+        }
+    }
+}
