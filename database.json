@@ -16,7 +16,28 @@
                     "shebang": "#!/bin/bash",
                     "mpirun_command": "srun -n {tot_num_mpiprocs}",
                     "mpiprocs_per_machine": 36,
-                    "prepend_text": "#SBATCH --partition={{ slurm_partition | default('normal') }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nsource $MODULESHOME/init/bash\nulimit -s unlimited"
+                    "prepend_text": "#SBATCH --partition={{ slurm_partition | default('normal') }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nsource $MODULESHOME/init/bash\nulimit -s unlimited",
+                    "metadata": {
+                        "label": {
+                            "description": "A short name to identify the computer",
+                            "type": "text",
+                            "key_display": "Label"
+                        },
+                        "slurm_partition": {
+                            "description": "The slurm partition to submit jobs to",
+                            "type": "list",
+                            "options": [
+                                "normal",
+                                "debug"
+                            ],
+                            "key_display": "Slurm partition"
+                        },
+                        "slurm_account": {
+                            "description": "The slurm account to submit jobs to",
+                            "type": "text",
+                            "key_display": "Slurm account"
+                        }
+                    }
                 }
             },
             "codes": {
@@ -24,7 +45,7 @@
                     "label": "{{ code_binary_name }}-7.2",
                     "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
                     "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/7.0-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/7.2-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
                     "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
                     "append_text": ""
                 },
@@ -36,14 +57,6 @@
                     "prepend_text": "module load daint-mc\nmodule load CP2K\n",
                     "append_text": " "
                 },
-                "dos-7.0": {
-                    "label": "dos-7.0",
-                    "description": "QE dos.x compiled for daint-mc",
-                    "default_calc_job_plugin": "quantumespresso.dos",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/7.0-CrayIntel-21.09/bin/dos.x",
-                    "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
-                    "append_text": ""
-                },
                 "pw-7.0": {
                     "label": "pw-7.0",
                     "description": "PW compiled for daint-mc",
@@ -52,11 +65,11 @@
                     "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
                     "append_text": ""
                 },
-                "projwfc-7.0": {
-                    "label": "projwfc-7.0",
-                    "description": "PROJWFC compiled for daint-mc",
-                    "default_calc_job_plugin": "quantumespresso.projwfc",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/7.0-CrayIntel-21.09/bin/projwfc.x",
+                "QE-7.0-exe-template": {
+                    "label": "{{ code_binary_name }}-7.0",
+                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
+                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/7.0-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
                     "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
                     "append_text": ""
                 }
@@ -80,7 +93,28 @@
                     "queue_name": "normal",
                     "work_dir": "/scratch/snx3000/{username}/aiida/",
                     "mpirun_command": "srun -n {tot_num_mpiprocs}",
-                    "prepend_text": "### computer prepend_text start ###\n#SBATCH --partition={{ slurm_partition | default('normal') }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=gpu\n#SBATCH --hint=nomultithread\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nexport CRAY_CUDA_MPS=1\nulimit -s unlimited\n### computer prepend_text end ###"
+                    "prepend_text": "### computer prepend_text start ###\n#SBATCH --partition={{ slurm_partition | default('normal') }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=gpu\n#SBATCH --hint=nomultithread\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nexport CRAY_CUDA_MPS=1\nulimit -s unlimited\n### computer prepend_text end ###",
+                    "metadata": {
+                        "label": {
+                            "description": "A short name to identify the computer",
+                            "type": "text",
+                            "key_display": "Label"
+                        },
+                        "slurm_partition": {
+                            "description": "The slurm partition to submit jobs to",
+                            "type": "list",
+                            "options": [
+                                "normal",
+                                "debug"
+                            ],
+                            "key_display": "Slurm partition"
+                        },
+                        "slurm_account": {
+                            "description": "The slurm account to submit jobs to",
+                            "type": "text",
+                            "key_display": "Slurm account"
+                        }
+                    }
                 }
             },
             "codes": {
@@ -90,7 +124,18 @@
                     "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
                     "filepath_executable": "/apps/daint/UES/jenkins/7.0.UP03/21.09/daint-gpu/software/QuantumESPRESSO/7.2-CrayNvidia-21.09/bin/{{ code_binary_name }}.x",
                     "prepend_text": "module load daint-gpu\nmodule load QuantumESPRESSO\n",
-                    "append_text": " "
+                    "append_text": " ",
+                    "metadata": {
+                        "code_binary_name": {
+                            "type": "list",
+                            "options": [
+                                "pw",
+                                "ph",
+                                "dos",
+                                "projwfc"
+                            ]
+                        }
+                    }
                 },
                 "cp2k-9.1": {
                     "label": "cp2k-9.1",

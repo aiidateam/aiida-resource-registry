@@ -13,6 +13,33 @@
                 "$ref": "#/definitions/resource"
             }
         },
+        "metadata": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "object",
+                "properties": {
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string",
+                        "enum": [
+                            "list",
+                            "text"
+                        ]
+                    },
+                    "options": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "key_display": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
         "resource": {
             "type": "object",
             "properties": {
@@ -89,6 +116,9 @@
                 },
                 "prepend_text": {
                     "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/metadata"
                 }
             },
             "required": [
@@ -114,6 +144,9 @@
                 },
                 "proxy_command": {
                     "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/metadata"
                 }
             },
             "required": [
@@ -143,6 +176,9 @@
                 },
                 "append_text": {
                     "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/metadata"
                 }
             },
             "required": [
