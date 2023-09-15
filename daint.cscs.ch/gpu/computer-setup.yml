@@ -20,3 +20,19 @@ prepend_text: |-
     export CRAY_CUDA_MPS=1
     ulimit -s unlimited
     ### computer prepend_text end ###
+metadata:
+    label:
+        description: A short name to identify the computer
+        type: text
+        key_display: Label
+    slurm_partition:
+        description: The slurm partition to submit jobs to
+        type: list
+        options:
+            - normal
+            - debug
+        key_display: Slurm partition
+    slurm_account:
+        description: The slurm account to submit jobs to
+        type: text
+        key_display: Slurm account

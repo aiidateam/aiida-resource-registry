@@ -17,3 +17,19 @@ prepend_text: |-
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
     source $MODULESHOME/init/bash
     ulimit -s unlimited
+metadata:
+    label:
+        description: A short name to identify the computer
+        type: text
+        key_display: Label
+    slurm_partition:
+        description: The slurm partition to submit jobs to
+        type: list
+        options:
+            - normal
+            - debug
+        key_display: Slurm partition
+    slurm_account:
+        description: The slurm account to submit jobs to
+        type: text
+        key_display: Slurm account

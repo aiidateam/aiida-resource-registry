@@ -13,6 +13,30 @@
             "$ref": "#/definitions/resource"
         }
     },
+    "metadata": {
+        "type": "object",
+        "additionalProperties": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["list", "text"]
+                },
+                "options": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "key_display": {
+                    "type": "string"
+                }
+            }
+        }
+    },
     "resource": {
         "type": "object",
         "properties": {
@@ -83,6 +107,9 @@
             },
             "prepend_text": {
                 "type": "string"
+            },
+            "metadata": {
+                "$ref": "#/definitions/metadata"
             }
         },
         "required": ["label", "hostname", "description", "transport", "scheduler", "work_dir", "shebang", "mpirun_command", "mpiprocs_per_machine", "prepend_text"],
@@ -97,6 +124,9 @@
             },
             "proxy_command": {
                 "type": "string"
+            },
+            "metadata": {
+                "$ref": "#/definitions/metadata"
             }
         },
         "required": ["safe_interval", "proxy_command"],
@@ -123,6 +153,9 @@
             },
             "append_text": {
                 "type": "string"
+            },
+            "metadata": {
+                "$ref": "#/definitions/metadata"
             }
         },
         "required": ["label", "description", "default_calc_job_plugin", "filepath_executable", "prepend_text", "append_text"],
