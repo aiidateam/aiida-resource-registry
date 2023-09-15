@@ -47,7 +47,19 @@
                     "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
                     "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/7.2-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
                     "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
-                    "append_text": ""
+                    "append_text": "",
+                    "metadata": {
+                        "code_binary_name": {
+                            "key_display": "Code name",
+                            "type": "list",
+                            "options": [
+                                "pw",
+                                "ph",
+                                "dos",
+                                "projwfc"
+                            ]
+                        }
+                    }
                 },
                 "cp2k-9.1": {
                     "label": "cp2k-9.1",
@@ -71,7 +83,19 @@
                     "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
                     "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/7.0-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
                     "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
-                    "append_text": ""
+                    "append_text": "",
+                    "metadata": {
+                        "code_binary_name": {
+                            "key_display": "Code name",
+                            "type": "list",
+                            "options": [
+                                "pw",
+                                "ph",
+                                "dos",
+                                "projwfc"
+                            ]
+                        }
+                    }
                 }
             }
         },
@@ -128,6 +152,7 @@
                     "metadata": {
                         "code_binary_name": {
                             "type": "list",
+                            "key_display": "Code name",
                             "options": [
                                 "pw",
                                 "ph",
