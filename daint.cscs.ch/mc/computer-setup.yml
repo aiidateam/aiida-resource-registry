@@ -21,7 +21,7 @@ metadata:
     label:
         description: A short name to identify the computer
         type: text
-        key_display: Label
+        key_display: Computer Label
     slurm_partition:
         description: The slurm partition to submit jobs to
         type: list
