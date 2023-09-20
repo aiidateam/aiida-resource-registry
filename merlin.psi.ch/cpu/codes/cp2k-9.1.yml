@@ -1,0 +1,9 @@
+---
+label: cp2k-9.1
+description: CP2K 9.1 compiled by CSCS
+default_calc_job_plugin: cp2k
+filepath_executable: /apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/CP2K/9.1-CrayGNU-21.09/bin/cp2k.psmp
+prepend_text: |
+    module load daint-mc
+    module load CP2K
+append_text: ' '

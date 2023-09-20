@@ -1,0 +1,18 @@
+---
+label: '{{ code_binary_name }}-7.2'
+description: The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint
+default_calc_job_plugin: quantumespresso.{{ code_binary_name }}
+filepath_executable: /apps/daint/UES/jenkins/7.0.UP03/21.09/daint-gpu/software/QuantumESPRESSO/7.2-CrayNvidia-21.09/bin/{{ code_binary_name }}.x
+prepend_text: |
+    module load daint-gpu
+    module load QuantumESPRESSO
+append_text: ' '
+metadata:
+    code_binary_name:
+        type: list
+        key_display: Code name
+        options:
+            - pw
+            - ph
+            - dos
+            - projwfc

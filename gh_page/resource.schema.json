@@ -129,7 +129,7 @@
                 "$ref": "#/definitions/metadata"
             }
         },
-        "required": ["safe_interval", "proxy_command"],
+        "required": ["safe_interval"],
         "additionalProperties": false,
         "title": "Computer Configure"
     },

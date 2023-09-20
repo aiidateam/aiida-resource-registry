@@ -1,0 +1,19 @@
+---
+label: '{{ code_binary_name }}-7.0'
+description: The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc
+default_calc_job_plugin: quantumespresso.{{ code_binary_name }}
+filepath_executable: /opt/psi/MPI/qe/7.0/openmpi/4.1.3_slurm/gcc/11.2.0/bin/{{ code_binary_name }}.x
+prepend_text: |
+    module use unstable;
+    module load gcc/11.2.0 openmpi/4.1.3_slurm
+    module load qe/7.0
+append_text: ''
+metadata:
+    code_binary_name:
+        key_display: Code name
+        type: list
+        options:
+            - pw
+            - ph
+            - dos
+            - projwfc

@@ -1,0 +1,37 @@
+---
+label: "{{ label | default('merlin-cpu') }}"
+hostname: merlin-l-01.psi.ch
+description: Merlin6 HPC at PSI.
+transport: core.ssh
+scheduler: core.slurm
+work_dir: /shared-scratch/{username}/aiida_run/
+shebang: '#!/bin/bash'
+mpirun_command: srun -n {tot_num_mpiprocs}
+mpiprocs_per_machine: 44
+prepend_text: |-
+    #SBATCH --partition={{ slurm_partition | default('general') }}
+    #SBATCH --account={{ slurm_account }}
+    #SBATCH --constraint=mc
+    #SBATCH --cpus-per-task=1
+    #SBATCH --cluster=merlin6
+    #SBATCH --account=merlin
+
+
+    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+    ulimit -s unlimited
+metadata:
+    label:
+        description: A short name to identify the computer
+        type: text
+        key_display: Computer Label
+    slurm_partition:
+        description: The slurm partition to submit jobs to
+        type: list
+        options:
+            - general
+            - debug
+        key_display: Slurm partition
+    slurm_account:
+        description: The slurm account to submit jobs to
+        type: text
+        key_display: Slurm account
