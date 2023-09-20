@@ -150,8 +150,7 @@
                 }
             },
             "required": [
-                "safe_interval",
-                "proxy_command"
+                "safe_interval"
             ],
             "additionalProperties": false,
             "title": "Computer Configure"
