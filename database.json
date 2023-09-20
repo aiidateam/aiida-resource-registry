@@ -190,7 +190,7 @@
                     "shebang": "#!/bin/bash",
                     "mpirun_command": "srun -n {tot_num_mpiprocs}",
                     "mpiprocs_per_machine": 44,
-                    "prepend_text": "#SBATCH --partition={{ slurm_partition | default('normal') }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --cluster=merlin6\n#SBATCH --account=merlin\n\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nulimit -s unlimited",
+                    "prepend_text": "#SBATCH --partition={{ slurm_partition | default('general') }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --cluster=merlin6\n#SBATCH --account=merlin\n\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nulimit -s unlimited",
                     "metadata": {
                         "label": {
                             "description": "A short name to identify the computer",
