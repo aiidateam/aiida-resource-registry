@@ -337,6 +337,7 @@
                     "append_text": " "
                 }
             }
-        }
+        },
+        "default": "cpu"
     }
 }
