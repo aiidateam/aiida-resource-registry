@@ -14,7 +14,14 @@
             }
         },
         "metadata": {
-            "type": "object",
+            "type": [
+                "object"
+            ],
+            "properties": {
+                "tooltip": {
+                    "type": "string"
+                }
+            },
             "additionalProperties": {
                 "type": "object",
                 "properties": {
@@ -37,7 +44,10 @@
                     "key_display": {
                         "type": "string"
                     }
-                }
+                },
+                "required": [
+                    "type"
+                ]
             }
         },
         "resource": {
