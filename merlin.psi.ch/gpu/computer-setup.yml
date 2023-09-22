@@ -1,38 +1,54 @@
 ---
-label: "{{ label | default('daint-gpu') }}"
-hostname: daint.cscs.ch
-description: Piz Daint supercomputer at CSCS Lugano, Switzerland, using the GPU nodes. HyperThreading is off
+label: '{{ label }}'
+hostname: merlin-l-01.psi.ch
+description: Merlin6 HPC at PSI (gpu section).
 transport: core.ssh
 scheduler: core.slurm
-shebang: '#!/bin/bash -l'
-mpiprocs_per_machine: 12
-num_cores_per_mpiproc: 1
-queue_name: normal
-work_dir: /scratch/snx3000/{username}/aiida/
+work_dir: /shared-scratch/{username}/aiida_run/
+shebang: '#!/bin/bash'
 mpirun_command: srun -n {tot_num_mpiprocs}
+mpiprocs_per_machine: 20
 prepend_text: |-
-    ### computer prepend_text start ###
-    #SBATCH --partition={{ slurm_partition | default('normal') }}
-    #SBATCH --account={{ slurm_account }}
-    #SBATCH --constraint=gpu
-    #SBATCH --hint=nomultithread
-    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
-    export CRAY_CUDA_MPS=1
+    #SBATCH --partition={{ slurm_partition }}
+    #SBATCH --account=merlin
+    #SBATCH --cluster=gmerlin6
+    #SBATCH --constraint={{ slurm_constraint }}
+
+    #SBATCH --hint={{ multithreading }}
+
     ulimit -s unlimited
-    ### computer prepend_text end ###
 metadata:
+    tooltip: |
+        <p>
+            <a href="https://lsm-hpce.gitpages.psi.ch/merlin6/" target="_blank">Merlin</a> HPC at PSI (gpu).
+        </p>
     label:
+        default: merlin-gpu
         description: A short name to identify the computer
         type: text
         key_display: Computer Label
     slurm_partition:
+        default: gpu
         description: The slurm partition to submit jobs to
         type: list
         options:
-            - normal
-            - debug
+            - gpu
+            - gpu-short
         key_display: Slurm partition
-    slurm_account:
-        description: The slurm account to submit jobs to
-        type: text
-        key_display: Slurm account
+    slurm_constraint:
+        default: gpumem_8gb
+        description: Specify the GPU by the amount of memory available in the GPU card itself.
+        type: list
+        options:
+            - gpumem_8gb
+            - gpumem_11gb
+            - gpumem_40gb
+        key_display: Slurm constraint
+    multithreading:
+        default: nomultithread
+        description: The multithreading hint
+        type: list
+        options:
+            - nomultithread
+            - multithread
+        key_display: Multithreading hint

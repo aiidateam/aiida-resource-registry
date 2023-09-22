@@ -1,9 +1,0 @@
----
-label: cp2k-9.1
-description: CP2K compiled for daint-gpu
-default_calc_job_plugin: cp2k
-filepath_executable: /apps/dom/UES/jenkins/7.0.UP03/21.09/dom-gpu/software/CP2K/9.1-CrayGNU-21.09-cuda/bin/cp2k.psmp
-prepend_text: |
-    module load daint-gpu
-    module load CP2K
-append_text: ' '

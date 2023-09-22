@@ -1,7 +1,7 @@
 ---
-label: "{{ label | default('merlin-cpu') }}"
+label: '{{ label }}'
 hostname: merlin-l-01.psi.ch
-description: Merlin6 HPC at PSI.
+description: Merlin6 HPC at PSI (cpu section).
 transport: core.ssh
 scheduler: core.slurm
 work_dir: /shared-scratch/{username}/aiida_run/
@@ -9,29 +9,38 @@ shebang: '#!/bin/bash'
 mpirun_command: srun -n {tot_num_mpiprocs}
 mpiprocs_per_machine: 44
 prepend_text: |-
-    #SBATCH --partition={{ slurm_partition | default('general') }}
-    #SBATCH --account={{ slurm_account }}
-    #SBATCH --constraint=mc
-    #SBATCH --cpus-per-task=1
-    #SBATCH --cluster=merlin6
+    #SBATCH --partition={{ slurm_partition }}
     #SBATCH --account=merlin
+    #SBATCH --cluster=merlin6
 
+    #SBATCH --cpus-per-task=1
+    #SBATCH --hint={{ multithreading }}
 
-    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
     ulimit -s unlimited
 metadata:
+    tooltip: |
+        <p>
+            <a href="https://lsm-hpce.gitpages.psi.ch/merlin6/" target="_blank">Merlin</a> HPC at PSI.
+        </p>
     label:
+        default: merlin-cpu
         description: A short name to identify the computer
         type: text
         key_display: Computer Label
     slurm_partition:
+        default: general
         description: The slurm partition to submit jobs to
         type: list
         options:
             - general
-            - debug
+            - daily
+            - hourly
         key_display: Slurm partition
-    slurm_account:
-        description: The slurm account to submit jobs to
-        type: text
-        key_display: Slurm account
+    multithreading:
+        default: nomultithread
+        description: The multithreading hint
+        type: list
+        options:
+            - nomultithread
+            - multithread
+        key_display: Multithreading hint

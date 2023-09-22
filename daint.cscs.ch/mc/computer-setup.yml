@@ -1,5 +1,5 @@
 ---
-label: "{{ label | default('daint-mc') }}"
+label: '{{ label }}'
 hostname: daint.cscs.ch
 description: Piz Daint supercomputer at CSCS Lugano, Switzerland, multicore partition.
 transport: core.ssh
@@ -9,27 +9,46 @@ shebang: '#!/bin/bash'
 mpirun_command: srun -n {tot_num_mpiprocs}
 mpiprocs_per_machine: 36
 prepend_text: |-
-    #SBATCH --partition={{ slurm_partition | default('normal') }}
+    #SBATCH --partition={{ slurm_partition }}
     #SBATCH --account={{ slurm_account }}
     #SBATCH --constraint=mc
     #SBATCH --cpus-per-task=1
+    #SBATCH --hint={{ multithreading }}
 
     export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
     source $MODULESHOME/init/bash
     ulimit -s unlimited
 metadata:
+    tooltip: |
+        <p>
+            <a href="https://user.cscs.ch/access/running/piz_daint/" target="_blank">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, multicore partition.
+        </p>
     label:
+        default: daint-mc
         description: A short name to identify the computer
         type: text
         key_display: Computer Label
     slurm_partition:
+        default: normal
         description: The slurm partition to submit jobs to
         type: list
         options:
             - normal
             - debug
+            - large
+            - long
+            - low
+            - prepost
         key_display: Slurm partition
     slurm_account:
         description: The slurm account to submit jobs to
         type: text
         key_display: Slurm account
+    multithreading:
+        default: nomultithread
+        description: The multithreading hint
+        type: list
+        options:
+            - nomultithread
+            - multithread
+        key_display: Multithreading hint

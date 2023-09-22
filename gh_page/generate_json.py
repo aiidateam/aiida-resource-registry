@@ -74,8 +74,11 @@ def main():
         link = domain_path / 'default'
         if link.exists() and link.is_symlink():
             domain_data['default'] = Path.readlink(link).name
+        else:
+            domain_data['default'] = list(domain_data.keys())[0]
 
         data[domain] = domain_data
+
 
     # Validate the data.
     schema = json.loads((root_path / 'gh_page' / 'resource.schema.json').read_text())
@@ -85,6 +88,14 @@ def main():
         except Exception as e:
             raise Exception(f"Invalid data for domain: {domain}") from e
 
+        # I use for iteration to walk through all the keys in the domain_data, but more efficient way is to
+        # treat it as database.
+        for metadata in extract_nested_metadata(domain_data):
+            for value in metadata.values():
+                try:
+                    validata_metadata(value)
+                except Exception as e:
+                    raise Exception(f"Invalid metadata in {domain}: {value}") from e
 
     # Store the data in a JSON file.
     with open(root_path/ 'gh_page' / 'out' / 'database.json', 'w') as filep:
@@ -93,6 +104,30 @@ def main():
     # Schema to out
     with open(root_path / 'gh_page' / 'out' / 'resource.schema.json', 'w') as filep:
         json.dump(schema, filep, indent=4)
+
+def validata_metadata(data: dict):
+    """validata the metadata for deep logic.
+    For example, if the type is a list, then the default value should be in the list.
+    """
+    if isinstance(data, str):
+        return
+    if data.get("type") == "list":
+        if "options" not in data:
+            raise Exception(f"Invalid metadata: {data}, options not in list type matadata.")
+
+        if "default" in data and data["default"] not in data["options"]:
+            raise Exception(f"""Invalid metadata: {data}, default value "{data['default']}" not in options.""")
+
+def extract_nested_metadata(data: dict):
+    """Extract the nested metadata from the data."""
+    for key, value in data.items():
+        if key == "metadata":
+            yield value
+        elif isinstance(value, dict):
+            yield from extract_nested_metadata(value)
+        else:
+            continue
+
 
 if "__main__" == __name__:
     main()
