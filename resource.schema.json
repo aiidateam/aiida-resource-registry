@@ -17,9 +17,7 @@
             }
         },
         "metadata": {
-            "type": [
-                "object"
-            ],
+            "type": "object",
             "properties": {
                 "tooltip": {
                     "type": "string"
