@@ -24,7 +24,9 @@ prepend_text: |-
 metadata:
     tooltip: |
         <p>
-            <a href="https://user.cscs.ch/access/running/piz_daint/" target="_blank">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition.
+            <a href="https://user.cscs.ch/access/running/piz_daint/" target="_blank">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>
+            The CSCS now require MFA to login, please check the <a href="https://user.cscs.ch/access/auth/mfa/" target="_blank">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>
+            If you are using the AiiDAlab, please use the <a href="https://github.com/aiidalab/aiidalab-mfa-cscs" target="_blank">MFA CSCS plugin</a> to set SSH connection.
         </p>
     ssh_auth: 2FA
     label:
