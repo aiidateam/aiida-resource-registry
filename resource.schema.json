@@ -23,6 +23,9 @@
             "properties": {
                 "tooltip": {
                     "type": "string"
+                },
+                "ssh_auth": {
+                    "type": "string"
                 }
             },
             "additionalProperties": {
