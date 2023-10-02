@@ -7,7 +7,7 @@
                     "proxy_command": "ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22"
                 },
                 "computer-setup": {
-                    "label": "{{ label | default('daint-gpu') }}",
+                    "label": "{{ label }}",
                     "hostname": "daint.cscs.ch",
                     "description": "Piz Daint supercomputer at CSCS Lugano, Switzerland, using the GPU nodes. HyperThreading is off",
                     "transport": "core.ssh",
@@ -18,7 +18,7 @@
                     "queue_name": "normal",
                     "work_dir": "/scratch/snx3000/{username}/aiida/",
                     "mpirun_command": "srun -n {tot_num_mpiprocs}",
-                    "prepend_text": "### computer prepend_text start ###\n#SBATCH --partition={{ slurm_partition | default('normal') }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=gpu\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nexport CRAY_CUDA_MPS=1\nulimit -s unlimited\n### computer prepend_text end ###",
+                    "prepend_text": "### computer prepend_text start ###\n#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=gpu\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nexport CRAY_CUDA_MPS=1\nulimit -s unlimited\n### computer prepend_text end ###",
                     "metadata": {
                         "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition.\n</p>\n",
                         "label": {
