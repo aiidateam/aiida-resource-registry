@@ -15,9 +15,12 @@
         }
     },
     "metadata": {
-        "type": ["object"],
+        "type": "object",
         "properties": {
             "tooltip": {
+                "type": "string"
+            },
+            "ssh_auth": {
                 "type": "string"
             }
         },

@@ -23,6 +23,7 @@ metadata:
         <p>
             <a href="https://user.cscs.ch/access/running/piz_daint/" target="_blank">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, multicore partition.
         </p>
+    ssh_auth: 2FA
     label:
         default: daint-mc
         description: A short name to identify the computer
