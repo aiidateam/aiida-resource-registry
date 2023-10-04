@@ -8,6 +8,7 @@
                     "proxy_command": "ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22",
                     "metadata": {
                         "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "2FA",
                         "username": {
                             "description": "The username to use for the SSH connection",
                             "type": "text",
@@ -30,7 +31,6 @@
                     "prepend_text": "### computer prepend_text start ###\n#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=gpu\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nexport CRAY_CUDA_MPS=1\nulimit -s unlimited\n### computer prepend_text end ###",
                     "metadata": {
                         "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, please use the <a href=\"https://github.com/aiidalab/aiidalab-mfa-cscs\" target=\"_blank\">MFA CSCS plugin</a> to set SSH connection.\n</p>\n",
-                        "ssh_auth": "2FA",
                         "label": {
                             "default": "daint-gpu",
                             "description": "A short name to identify the computer",
@@ -108,6 +108,7 @@
                     "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
                     "metadata": {
                         "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "2FA",
                         "username": {
                             "description": "The username to use for the SSH connection",
                             "type": "text",
@@ -128,7 +129,6 @@
                     "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nsource $MODULESHOME/init/bash\nulimit -s unlimited",
                     "metadata": {
                         "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, please use the <a href=\"https://github.com/aiidalab/aiidalab-mfa-cscs\" target=\"_blank\">MFA CSCS plugin</a> to set SSH connection.\n</p>\n",
-                        "ssh_auth": "2FA",
                         "label": {
                             "default": "daint-mc",
                             "description": "A short name to identify the computer",
@@ -236,6 +236,7 @@
                     "username": "{{ username }}",
                     "metadata": {
                         "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "password",
                         "username": {
                             "description": "The username to use for the SSH connection",
                             "type": "text",
@@ -326,6 +327,7 @@
                     "username": "{{ username }}",
                     "metadata": {
                         "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "password",
                         "username": {
                             "description": "The username to use for the SSH connection",
                             "type": "text",

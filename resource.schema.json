@@ -23,7 +23,11 @@
                     "type": "string"
                 },
                 "ssh_auth": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "password",
+                        "2FA"
+                    ]
                 }
             },
             "additionalProperties": {
