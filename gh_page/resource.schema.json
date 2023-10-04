@@ -21,7 +21,8 @@
                 "type": "string"
             },
             "ssh_auth": {
-                "type": "string"
+                "type": "string",
+                "enum": ["password", "2FA"]
             }
         },
         "additionalProperties": {
@@ -129,6 +130,9 @@
     "computer-configure.yml": {
         "type": "object",
         "properties": {
+            "username": {
+                "type": "string"
+            },
             "safe_interval": {
                 "type": "integer"
             },
@@ -139,8 +143,8 @@
                 "$ref": "#/definitions/metadata"
             }
         },
-        "required": ["safe_interval"],
-        "additionalProperties": false,
+        "required": ["safe_interval", "username"],
+        "additionalProperties": true,
         "title": "Computer Configure"
     },
     "code.yml": {
