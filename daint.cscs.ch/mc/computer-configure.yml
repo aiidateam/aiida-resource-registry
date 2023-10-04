@@ -1,3 +1,13 @@
 ---
+username: '{{ username }}'
 safe_interval: 60
-proxy_command: ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22
+proxy_command: ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22
+metadata:
+    tooltip: |
+        <p>
+            Setup up the SSH connection.
+        </p>
+    username:
+        description: The username to use for the SSH connection
+        type: text
+        key_display: SSH username
