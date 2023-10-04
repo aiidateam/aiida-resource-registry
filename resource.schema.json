@@ -153,6 +153,9 @@
         "computer-configure.yml": {
             "type": "object",
             "properties": {
+                "username": {
+                    "type": "string"
+                },
                 "safe_interval": {
                     "type": "integer"
                 },
@@ -164,9 +167,10 @@
                 }
             },
             "required": [
-                "safe_interval"
+                "safe_interval",
+                "username"
             ],
-            "additionalProperties": false,
+            "additionalProperties": true,
             "title": "Computer Configure"
         },
         "code.yml": {

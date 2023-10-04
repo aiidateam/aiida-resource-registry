@@ -3,8 +3,17 @@
         "gpu": {
             "computer": {
                 "computer-configure": {
+                    "username": "{{ username }}",
                     "safe_interval": 60,
-                    "proxy_command": "ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22"
+                    "proxy_command": "ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "username": {
+                            "description": "The username to use for the SSH connection",
+                            "type": "text",
+                            "key_display": "SSH username"
+                        }
+                    }
                 },
                 "computer-setup": {
                     "label": "{{ label }}",
@@ -94,8 +103,17 @@
         "mc": {
             "computer": {
                 "computer-configure": {
+                    "username": "{{ username }}",
                     "safe_interval": 60,
-                    "proxy_command": "ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22"
+                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "username": {
+                            "description": "The username to use for the SSH connection",
+                            "type": "text",
+                            "key_display": "SSH username"
+                        }
+                    }
                 },
                 "computer-setup": {
                     "label": "{{ label }}",
@@ -215,7 +233,15 @@
             "computer": {
                 "computer-configure": {
                     "safe_interval": 60,
-                    "proxy_command": "ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22"
+                    "username": "{{ username }}",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "username": {
+                            "description": "The username to use for the SSH connection",
+                            "type": "text",
+                            "key_display": "SSH username"
+                        }
+                    }
                 },
                 "computer-setup": {
                     "label": "{{ label }}",
@@ -296,7 +322,16 @@
         "cpu": {
             "computer": {
                 "computer-configure": {
-                    "safe_interval": 60
+                    "safe_interval": 60,
+                    "username": "{{ username }}",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "username": {
+                            "description": "The username to use for the SSH connection",
+                            "type": "text",
+                            "key_display": "SSH username"
+                        }
+                    }
                 },
                 "computer-setup": {
                     "label": "{{ label }}",
