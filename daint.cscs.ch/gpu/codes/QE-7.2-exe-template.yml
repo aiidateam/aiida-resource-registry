@@ -8,11 +8,12 @@ prepend_text: |
     module load QuantumESPRESSO
 append_text: ' '
 metadata:
-    code_binary_name:
-        type: list
-        key_display: Code name
-        options:
-            - pw
-            - ph
-            - dos
-            - projwfc
+    template_variables:
+        code_binary_name:
+            type: list
+            key_display: Code name
+            options:
+                - pw
+                - ph
+                - dos
+                - projwfc

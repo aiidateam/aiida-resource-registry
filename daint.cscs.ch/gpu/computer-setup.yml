@@ -28,33 +28,34 @@ metadata:
             The CSCS now require MFA to login, please check the <a href="https://user.cscs.ch/access/auth/mfa/" target="_blank">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>
             If you are using the AiiDAlab, please use the <a href="https://github.com/aiidalab/aiidalab-mfa-cscs" target="_blank">MFA CSCS plugin</a> to set SSH connection.
         </p>
-    label:
-        default: daint-gpu
-        description: A short name to identify the computer
-        type: text
-        key_display: Computer Label
-    slurm_partition:
-        default: normal
-        description: The slurm partition to submit jobs to
-        type: list
-        options:
-            - normal
-            - debug
-            - large
-            - long
-            - low
-            - prepost
-        key_display: Slurm partition
-    slurm_account:
-        description: The slurm account to submit jobs to
-        type: text
-        key_display: Slurm account
-    multithreading:
-        default: nomultithread
-        description: The multithreading hint
-        type: list
-        options:
-            - nomultithread
-            - multithread
-        key_display: Multithreading hint
+    template_variables:
+        label:
+            default: daint-gpu
+            description: A short name to identify the computer
+            type: text
+            key_display: Computer Label
+        slurm_partition:
+            default: normal
+            description: The slurm partition to submit jobs to
+            type: list
+            options:
+                - normal
+                - debug
+                - large
+                - long
+                - low
+                - prepost
+            key_display: Slurm partition
+        slurm_account:
+            description: The slurm account to submit jobs to
+            type: text
+            key_display: Slurm account
+        multithreading:
+            default: nomultithread
+            description: The multithreading hint
+            type: list
+            options:
+                - nomultithread
+                - multithread
+            key_display: Multithreading hint
 
