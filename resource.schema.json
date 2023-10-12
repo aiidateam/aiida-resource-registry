@@ -16,20 +16,8 @@
                 "$ref": "#/definitions/resource"
             }
         },
-        "metadata": {
+        "template_variables": {
             "type": "object",
-            "properties": {
-                "tooltip": {
-                    "type": "string"
-                },
-                "ssh_auth": {
-                    "type": "string",
-                    "enum": [
-                        "password",
-                        "2FA"
-                    ]
-                }
-            },
             "additionalProperties": {
                 "type": "object",
                 "properties": {
@@ -136,7 +124,15 @@
                     "type": "string"
                 },
                 "metadata": {
-                    "$ref": "#/definitions/metadata"
+                    "type": "object",
+                    "properties": {
+                        "tooltip": {
+                            "type": "string"
+                        },
+                        "template_variables": {
+                            "$ref": "#/definitions/template_variables"
+                        }
+                    }
                 }
             },
             "required": [
@@ -167,7 +163,23 @@
                     "type": "string"
                 },
                 "metadata": {
-                    "$ref": "#/definitions/metadata"
+                    "type": "object",
+                    "properties": {
+                        "tooltip": {
+                            "type": "string"
+                        },
+                        "ssh_auth": {
+                            "type": "string",
+                            "enum": [
+                                "password",
+                                "key",
+                                "2FA"
+                            ]
+                        },
+                        "template_variables": {
+                            "$ref": "#/definitions/template_variables"
+                        }
+                    }
                 }
             },
             "required": [
@@ -199,7 +211,23 @@
                     "type": "string"
                 },
                 "metadata": {
-                    "$ref": "#/definitions/metadata"
+                    "type": "object",
+                    "properties": {
+                        "tooltip": {
+                            "type": "string"
+                        },
+                        "ssh_auth": {
+                            "type": "string",
+                            "enum": [
+                                "password",
+                                "key",
+                                "2FA"
+                            ]
+                        },
+                        "template_variables": {
+                            "$ref": "#/definitions/template_variables"
+                        }
+                    }
                 }
             },
             "required": [
