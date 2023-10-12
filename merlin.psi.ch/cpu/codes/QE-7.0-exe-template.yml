@@ -9,11 +9,12 @@ prepend_text: |
     module load qe/7.0
 append_text: ''
 metadata:
-    code_binary_name:
-        key_display: Code name
-        type: list
-        options:
-            - pw
-            - ph
-            - dos
-            - projwfc
+    template_variables:
+        code_binary_name:
+            key_display: Code name
+            type: list
+            options:
+                - pw
+                - ph
+                - dos
+                - projwfc

@@ -7,7 +7,8 @@ metadata:
             Setup up the SSH connection.
         </p>
     ssh_auth: password
-    username:
-        description: The username to use for the SSH connection
-        type: text
-        key_display: SSH username
+    template_variables:
+        username:
+            description: The username to use for the SSH connection
+            type: text
+            key_display: SSH username
