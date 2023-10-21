@@ -194,7 +194,7 @@
                     "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
                     "append_text": "",
                     "metadata": {
-                        "templte_variables": {
+                        "template_variables": {
                             "code_binary_name": {
                                 "key_display": "Code name",
                                 "type": "list",
@@ -216,7 +216,7 @@
                     "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
                     "append_text": "",
                     "metadata": {
-                        "templte_variables": {
+                        "template_variables": {
                             "code_binary_name": {
                                 "key_display": "Code name",
                                 "type": "list",

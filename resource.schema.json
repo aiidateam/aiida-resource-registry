@@ -132,7 +132,8 @@
                         "template_variables": {
                             "$ref": "#/definitions/template_variables"
                         }
-                    }
+                    },
+                    "additionalProperties": false
                 }
             },
             "required": [
@@ -179,7 +180,8 @@
                         "template_variables": {
                             "$ref": "#/definitions/template_variables"
                         }
-                    }
+                    },
+                    "additionalProperties": false
                 }
             },
             "required": [
@@ -216,18 +218,11 @@
                         "tooltip": {
                             "type": "string"
                         },
-                        "ssh_auth": {
-                            "type": "string",
-                            "enum": [
-                                "password",
-                                "key",
-                                "2FA"
-                            ]
-                        },
                         "template_variables": {
                             "$ref": "#/definitions/template_variables"
                         }
-                    }
+                    },
+                    "additionalProperties": false
                 }
             },
             "required": [
