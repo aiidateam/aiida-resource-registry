@@ -119,7 +119,8 @@
                     "template_variables": {
                         "$ref": "#/definitions/template_variables"
                     }
-                }
+                },
+                "additionalProperties": false
             }
         },
         "required": ["label", "hostname", "description", "transport", "scheduler", "work_dir", "shebang", "mpirun_command", "mpiprocs_per_machine", "prepend_text"],
@@ -151,7 +152,8 @@
                     "template_variables": {
                         "$ref": "#/definitions/template_variables"
                     }
-                }
+                },
+                "additionalProperties": false
             }
         },
         "required": ["safe_interval", "username"],
@@ -185,14 +187,11 @@
                     "tooltip": {
                         "type": "string"
                     },
-                    "ssh_auth": {
-                        "type": "string",
-                        "enum": ["password", "key", "2FA"]
-                    },
                     "template_variables": {
                         "$ref": "#/definitions/template_variables"
                     }
-                }
+                },
+                "additionalProperties": false
             }
         },
         "required": ["label", "description", "default_calc_job_plugin", "filepath_executable", "prepend_text", "append_text"],
