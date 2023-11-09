@@ -1,0 +1,8 @@
+---
+label: sirius-pw
+description: SIRIUS-enabled Quantum ESPRESSO v7.2 pw.x ;
+default_calc_job_plugin: quantumespresso.pw
+filepath_executable: /apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x
+prepend_text: |-
+    module load daint-gpu
+append_text: ' '
