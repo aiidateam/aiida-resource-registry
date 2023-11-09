@@ -403,6 +403,14 @@
                     "prepend_text": "module load daint-gpu\nmodule load CP2K\n",
                     "append_text": " "
                 },
+                "sirius-pw": {
+                    "label": "sirius-pw",
+                    "description": "SIRIUS-enabled Quantum ESPRESSO v7.2 pw.x ;",
+                    "default_calc_job_plugin": "quantumespresso.pw",
+                    "filepath_executable": "/apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x",
+                    "prepend_text": "module load daint-gpu",
+                    "append_text": " "
+                },
                 "QE-7.2-exe-template": {
                     "label": "{{ code_binary_name }}-7.2",
                     "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint",
