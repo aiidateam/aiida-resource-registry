@@ -261,7 +261,7 @@
                 }
             },
             "codes": {
-                "CP2K-9.1": {
+                "cp2k-9.1": {
                     "label": "cp2k-9.1",
                     "description": "CP2K 9.1 compiled by CSCS",
                     "default_calc_job_plugin": "cp2k",
@@ -391,7 +391,7 @@
                 }
             },
             "codes": {
-                "CP2K-9.1": {
+                "cp2k-9.1": {
                     "label": "cp2k-9.1",
                     "description": "CP2K compiled for daint-gpu",
                     "default_calc_job_plugin": "cp2k",
