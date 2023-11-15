@@ -192,7 +192,7 @@
                 "computer-configure": {
                     "username": "{{ username }}",
                     "safe_interval": 10,
-                    "proxy_command": "ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22",
+                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
                     "key_filename": "~/.ssh/cscs-key",
                     "key_policy": "AutoAddPolicy",
                     "metadata": {
@@ -320,7 +320,7 @@
                 "computer-configure": {
                     "username": "{{ username }}",
                     "safe_interval": 10,
-                    "proxy_command": "ssh -q -Y {username}@ela.cscs.ch netcat daint.cscs.ch 22",
+                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
                     "key_filename": "~/.ssh/cscs-key",
                     "key_policy": "AutoAddPolicy",
                     "metadata": {
