@@ -333,7 +333,8 @@
                                     "pw",
                                     "ph",
                                     "dos",
-                                    "projwfc"
+                                    "projwfc",
+                                    "xspectra"
                                 ]
                             }
                         }
@@ -420,7 +421,8 @@
                                     "pw",
                                     "ph",
                                     "dos",
-                                    "projwfc"
+                                    "projwfc",
+                                    "xspectra"
                                 ]
                             }
                         }
