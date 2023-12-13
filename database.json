@@ -74,6 +74,14 @@
                 }
             },
             "codes": {
+                "cp2k-9.1": {
+                    "label": "cp2k-9.1",
+                    "description": "CP2K 9.1 compiled by CSCS",
+                    "default_calc_job_plugin": "cp2k",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/CP2K/9.1-CrayGNU-21.09/bin/cp2k.psmp",
+                    "prepend_text": "module load daint-mc\nmodule load CP2K\n",
+                    "append_text": " "
+                },
                 "QuantumESPRESSO": {
                     "label": "{{ code_binary_name }}-{{ version }}",
                     "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
@@ -104,14 +112,6 @@
                             }
                         }
                     }
-                },
-                "cp2k-9.1": {
-                    "label": "cp2k-9.1",
-                    "description": "CP2K 9.1 compiled by CSCS",
-                    "default_calc_job_plugin": "cp2k",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/CP2K/9.1-CrayGNU-21.09/bin/cp2k.psmp",
-                    "prepend_text": "module load daint-mc\nmodule load CP2K\n",
-                    "append_text": " "
                 }
             }
         },
@@ -191,6 +191,22 @@
                 }
             },
             "codes": {
+                "SIRIUS-PW": {
+                    "label": "sirius-pw",
+                    "description": "SIRIUS-enabled Quantum ESPRESSO v7.2 pw.x ;",
+                    "default_calc_job_plugin": "quantumespresso.pw",
+                    "filepath_executable": "/apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x",
+                    "prepend_text": "module load daint-gpu",
+                    "append_text": " "
+                },
+                "cp2k-9.1": {
+                    "label": "cp2k-9.1",
+                    "description": "CP2K compiled for daint-gpu",
+                    "default_calc_job_plugin": "cp2k",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-gpu/software/CP2K/9.1-CrayGNU-21.09-cuda/bin/cp2k.psmp",
+                    "prepend_text": "module load daint-gpu\nmodule load CP2K\n",
+                    "append_text": " "
+                },
                 "QuantumESPRESSO": {
                     "label": "{{ code_binary_name }}-{{ version }}}}",
                     "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint",
@@ -222,28 +238,100 @@
                             }
                         }
                     }
-                },
-                "SIRIUS-PW": {
-                    "label": "sirius-pw",
-                    "description": "SIRIUS-enabled Quantum ESPRESSO v7.2 pw.x ;",
-                    "default_calc_job_plugin": "quantumespresso.pw",
-                    "filepath_executable": "/apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x",
-                    "prepend_text": "module load daint-gpu",
-                    "append_text": " "
-                },
-                "cp2k-9.1": {
-                    "label": "cp2k-9.1",
-                    "description": "CP2K compiled for daint-gpu",
-                    "default_calc_job_plugin": "cp2k",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-gpu/software/CP2K/9.1-CrayGNU-21.09-cuda/bin/cp2k.psmp",
-                    "prepend_text": "module load daint-gpu\nmodule load CP2K\n",
-                    "append_text": " "
                 }
             }
         },
         "default": "mc"
     },
     "merlin.psi.ch": {
+        "cpu": {
+            "computer": {
+                "computer-configure": {
+                    "safe_interval": 60,
+                    "username": "{{ username }}",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "password",
+                        "template_variables": {
+                            "username": {
+                                "description": "The username to use for the SSH connection",
+                                "type": "text",
+                                "key_display": "SSH username"
+                            }
+                        }
+                    }
+                },
+                "computer-setup": {
+                    "label": "{{ label }}",
+                    "hostname": "merlin-l-01.psi.ch",
+                    "description": "Merlin6 HPC at PSI (cpu section).",
+                    "transport": "core.ssh",
+                    "scheduler": "core.slurm",
+                    "work_dir": "/shared-scratch/{username}/aiida_run/",
+                    "shebang": "#!/bin/bash",
+                    "mpirun_command": "srun -n {tot_num_mpiprocs}",
+                    "mpiprocs_per_machine": 44,
+                    "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account=merlin\n#SBATCH --cluster=merlin6\n\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nulimit -s unlimited",
+                    "metadata": {
+                        "tooltip": "<p>\n    <a href=\"https://lsm-hpce.gitpages.psi.ch/merlin6/\" target=\"_blank\">Merlin</a> HPC at PSI.\n</p>\n",
+                        "template_variables": {
+                            "label": {
+                                "default": "merlin-cpu",
+                                "description": "A short name to identify the computer",
+                                "type": "text",
+                                "key_display": "Computer Label"
+                            },
+                            "slurm_partition": {
+                                "default": "general",
+                                "description": "The slurm partition to submit jobs to",
+                                "type": "list",
+                                "options": [
+                                    "general",
+                                    "daily",
+                                    "hourly"
+                                ],
+                                "key_display": "Slurm partition"
+                            },
+                            "multithreading": {
+                                "default": "nomultithread",
+                                "description": "The multithreading hint",
+                                "type": "list",
+                                "options": [
+                                    "nomultithread",
+                                    "multithread"
+                                ],
+                                "key_display": "Multithreading hint"
+                            }
+                        }
+                    }
+                }
+            },
+            "codes": {
+                "QuantumESPRESSO-7.0": {
+                    "label": "{{ code_binary_name }}-7.0",
+                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
+                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
+                    "filepath_executable": "/opt/psi/MPI/qe/7.0/openmpi/4.1.3_slurm/gcc/11.2.0/bin/{{ code_binary_name }}.x",
+                    "prepend_text": "module use unstable;\nmodule load gcc/11.2.0 openmpi/4.1.3_slurm\nmodule load qe/7.0\n",
+                    "append_text": "",
+                    "metadata": {
+                        "template_variables": {
+                            "code_binary_name": {
+                                "key_display": "Code name",
+                                "type": "list",
+                                "options": [
+                                    "pw",
+                                    "ph",
+                                    "dos",
+                                    "projwfc",
+                                    "xspectra"
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "gpu": {
             "computer": {
                 "computer-configure": {
@@ -342,94 +430,6 @@
                 }
             }
         },
-        "cpu": {
-            "computer": {
-                "computer-configure": {
-                    "safe_interval": 60,
-                    "username": "{{ username }}",
-                    "metadata": {
-                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
-                        "ssh_auth": "password",
-                        "template_variables": {
-                            "username": {
-                                "description": "The username to use for the SSH connection",
-                                "type": "text",
-                                "key_display": "SSH username"
-                            }
-                        }
-                    }
-                },
-                "computer-setup": {
-                    "label": "{{ label }}",
-                    "hostname": "merlin-l-01.psi.ch",
-                    "description": "Merlin6 HPC at PSI (cpu section).",
-                    "transport": "core.ssh",
-                    "scheduler": "core.slurm",
-                    "work_dir": "/shared-scratch/{username}/aiida_run/",
-                    "shebang": "#!/bin/bash",
-                    "mpirun_command": "srun -n {tot_num_mpiprocs}",
-                    "mpiprocs_per_machine": 44,
-                    "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account=merlin\n#SBATCH --cluster=merlin6\n\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nulimit -s unlimited",
-                    "metadata": {
-                        "tooltip": "<p>\n    <a href=\"https://lsm-hpce.gitpages.psi.ch/merlin6/\" target=\"_blank\">Merlin</a> HPC at PSI.\n</p>\n",
-                        "template_variables": {
-                            "label": {
-                                "default": "merlin-cpu",
-                                "description": "A short name to identify the computer",
-                                "type": "text",
-                                "key_display": "Computer Label"
-                            },
-                            "slurm_partition": {
-                                "default": "general",
-                                "description": "The slurm partition to submit jobs to",
-                                "type": "list",
-                                "options": [
-                                    "general",
-                                    "daily",
-                                    "hourly"
-                                ],
-                                "key_display": "Slurm partition"
-                            },
-                            "multithreading": {
-                                "default": "nomultithread",
-                                "description": "The multithreading hint",
-                                "type": "list",
-                                "options": [
-                                    "nomultithread",
-                                    "multithread"
-                                ],
-                                "key_display": "Multithreading hint"
-                            }
-                        }
-                    }
-                }
-            },
-            "codes": {
-                "QuantumESPRESSO-7.0": {
-                    "label": "{{ code_binary_name }}-7.0",
-                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
-                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
-                    "filepath_executable": "/opt/psi/MPI/qe/7.0/openmpi/4.1.3_slurm/gcc/11.2.0/bin/{{ code_binary_name }}.x",
-                    "prepend_text": "module use unstable;\nmodule load gcc/11.2.0 openmpi/4.1.3_slurm\nmodule load qe/7.0\n",
-                    "append_text": "",
-                    "metadata": {
-                        "template_variables": {
-                            "code_binary_name": {
-                                "key_display": "Code name",
-                                "type": "list",
-                                "options": [
-                                    "pw",
-                                    "ph",
-                                    "dos",
-                                    "projwfc",
-                                    "xspectra"
-                                ]
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "default": "gpu"
+        "default": "cpu"
     }
 }
