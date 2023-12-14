@@ -21,6 +21,6 @@ metadata:
             type: list
             key_display: QE version
             options:
-                - "7.0"
-                - "7.1"
-            default: "7.1"
+                - '7.0'
+                - '7.1'
+            default: '7.1'
