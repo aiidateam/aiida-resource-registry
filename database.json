@@ -1,266 +1,7 @@
 {
-    "daint.cscs.ch": {
-        "gpu": {
-            "computer": {
-                "computer-configure": {
-                    "username": "{{ username }}",
-                    "safe_interval": 10,
-                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
-                    "key_filename": "~/.ssh/cscs-key",
-                    "key_policy": "AutoAddPolicy",
-                    "metadata": {
-                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
-                        "ssh_auth": "2FA",
-                        "template_variables": {
-                            "username": {
-                                "description": "The username to use for the SSH connection",
-                                "type": "text",
-                                "key_display": "SSH username"
-                            }
-                        }
-                    }
-                },
-                "computer-setup": {
-                    "label": "{{ label }}",
-                    "hostname": "daint.cscs.ch",
-                    "description": "Piz Daint supercomputer at CSCS Lugano, Switzerland, using the GPU nodes. HyperThreading is off",
-                    "transport": "core.ssh",
-                    "scheduler": "core.slurm",
-                    "shebang": "#!/bin/bash -l",
-                    "mpiprocs_per_machine": 12,
-                    "num_cores_per_mpiproc": 1,
-                    "queue_name": "normal",
-                    "work_dir": "/scratch/snx3000/{username}/aiida/",
-                    "mpirun_command": "srun -n {tot_num_mpiprocs}",
-                    "prepend_text": "### computer prepend_text start ###\n#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=gpu\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nexport CRAY_CUDA_MPS=1\nulimit -s unlimited\n### computer prepend_text end ###",
-                    "metadata": {
-                        "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, <a href=\"/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb\" target=\"_blank\">use the MFA CSCS app</a> to set SSH connection.\n</p>\n",
-                        "template_variables": {
-                            "label": {
-                                "default": "daint-gpu",
-                                "description": "A short name to identify the computer",
-                                "type": "text",
-                                "key_display": "Computer Label"
-                            },
-                            "slurm_partition": {
-                                "default": "normal",
-                                "description": "The slurm partition to submit jobs to",
-                                "type": "list",
-                                "options": [
-                                    "normal",
-                                    "debug",
-                                    "large",
-                                    "long",
-                                    "low",
-                                    "prepost"
-                                ],
-                                "key_display": "Slurm partition"
-                            },
-                            "slurm_account": {
-                                "description": "The slurm account to submit jobs to",
-                                "type": "text",
-                                "key_display": "Slurm account"
-                            },
-                            "multithreading": {
-                                "default": "nomultithread",
-                                "description": "The multithreading hint",
-                                "type": "list",
-                                "options": [
-                                    "nomultithread",
-                                    "multithread"
-                                ],
-                                "key_display": "Multithreading hint"
-                            }
-                        }
-                    }
-                }
-            },
-            "codes": {
-                "cp2k-9.1": {
-                    "label": "cp2k-9.1",
-                    "description": "CP2K compiled for daint-gpu",
-                    "default_calc_job_plugin": "cp2k",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-gpu/software/CP2K/9.1-CrayGNU-21.09-cuda/bin/cp2k.psmp",
-                    "prepend_text": "module load daint-gpu\nmodule load CP2K\n",
-                    "append_text": " "
-                },
-                "QuantumESPRESSO": {
-                    "label": "{{ code_binary_name }}-{{ version }}}}",
-                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint",
-                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
-                    "filepath_executable": "/apps/daint/UES/jenkins/7.0.UP03/21.09/daint-gpu/software/QuantumESPRESSO/{{ version }}-CrayNvidia-21.09/bin/{{ code_binary_name }}.x",
-                    "prepend_text": "module load daint-gpu\nmodule load QuantumESPRESSO\n",
-                    "append_text": " ",
-                    "metadata": {
-                        "template_variables": {
-                            "code_binary_name": {
-                                "type": "list",
-                                "key_display": "Code name",
-                                "options": [
-                                    "pw",
-                                    "ph",
-                                    "dos",
-                                    "projwfc"
-                                ]
-                            },
-                            "version": {
-                                "type": "list",
-                                "key_display": "QE version",
-                                "options": [
-                                    "7.0",
-                                    "7.1",
-                                    "7.2"
-                                ],
-                                "default": "7.2"
-                            }
-                        }
-                    }
-                },
-                "SIRIUS-PW": {
-                    "label": "sirius-pw",
-                    "description": "SIRIUS-enabled Quantum ESPRESSO v7.2 pw.x ;",
-                    "default_calc_job_plugin": "quantumespresso.pw",
-                    "filepath_executable": "/apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x",
-                    "prepend_text": "module load daint-gpu",
-                    "append_text": " "
-                }
-            }
-        },
-        "mc": {
-            "computer": {
-                "computer-configure": {
-                    "username": "{{ username }}",
-                    "safe_interval": 10,
-                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
-                    "key_filename": "~/.ssh/cscs-key",
-                    "key_policy": "AutoAddPolicy",
-                    "metadata": {
-                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
-                        "ssh_auth": "2FA",
-                        "template_variables": {
-                            "username": {
-                                "description": "The username to use for the SSH connection",
-                                "type": "text",
-                                "key_display": "SSH username"
-                            }
-                        }
-                    }
-                },
-                "computer-setup": {
-                    "label": "{{ label }}",
-                    "hostname": "daint.cscs.ch",
-                    "description": "Piz Daint supercomputer at CSCS Lugano, Switzerland, multicore partition.",
-                    "transport": "core.ssh",
-                    "scheduler": "core.slurm",
-                    "work_dir": "/scratch/snx3000/{username}/aiida_run/",
-                    "shebang": "#!/bin/bash",
-                    "mpirun_command": "srun -n {tot_num_mpiprocs}",
-                    "mpiprocs_per_machine": 36,
-                    "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nsource $MODULESHOME/init/bash\nulimit -s unlimited",
-                    "metadata": {
-                        "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, <a href=\"/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb\" target=\"_blank\">use the MFA CSCS app</a> to set SSH connection.\n</p>\n",
-                        "template_variables": {
-                            "label": {
-                                "default": "daint-mc",
-                                "description": "A short name to identify the computer",
-                                "type": "text",
-                                "key_display": "Computer Label"
-                            },
-                            "slurm_partition": {
-                                "default": "normal",
-                                "description": "The slurm partition to submit jobs to",
-                                "type": "list",
-                                "options": [
-                                    "normal",
-                                    "debug",
-                                    "large",
-                                    "long",
-                                    "low",
-                                    "prepost"
-                                ],
-                                "key_display": "Slurm partition"
-                            },
-                            "slurm_account": {
-                                "description": "The slurm account to submit jobs to",
-                                "type": "text",
-                                "key_display": "Slurm account"
-                            },
-                            "multithreading": {
-                                "default": "nomultithread",
-                                "description": "The multithreading hint",
-                                "type": "list",
-                                "options": [
-                                    "nomultithread",
-                                    "multithread"
-                                ],
-                                "key_display": "Multithreading hint"
-                            }
-                        }
-                    }
-                }
-            },
-            "codes": {
-                "cp2k-9.1": {
-                    "label": "cp2k-9.1",
-                    "description": "CP2K 9.1 compiled by CSCS",
-                    "default_calc_job_plugin": "cp2k",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/CP2K/9.1-CrayGNU-21.09/bin/cp2k.psmp",
-                    "prepend_text": "module load daint-mc\nmodule load CP2K\n",
-                    "append_text": " "
-                },
-                "QuantumESPRESSO": {
-                    "label": "{{ code_binary_name }}-{{ version }}",
-                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
-                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/{{ version }}-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
-                    "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
-                    "append_text": "",
-                    "metadata": {
-                        "template_variables": {
-                            "code_binary_name": {
-                                "key_display": "Code name",
-                                "type": "list",
-                                "options": [
-                                    "pw",
-                                    "ph",
-                                    "dos",
-                                    "projwfc"
-                                ]
-                            },
-                            "version": {
-                                "type": "list",
-                                "key_display": "QE version",
-                                "options": [
-                                    "7.0",
-                                    "7.1"
-                                ],
-                                "default": "7.1"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "default": "mc"
-    },
     "merlin.psi.ch": {
         "gpu": {
             "computer": {
-                "computer-configure": {
-                    "safe_interval": 60,
-                    "username": "{{ username }}",
-                    "metadata": {
-                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
-                        "ssh_auth": "password",
-                        "template_variables": {
-                            "username": {
-                                "description": "The username to use for the SSH connection",
-                                "type": "text",
-                                "key_display": "SSH username"
-                            }
-                        }
-                    }
-                },
                 "computer-setup": {
                     "label": "{{ label }}",
                     "hostname": "merlin-l-01.psi.ch",
@@ -314,6 +55,21 @@
                             }
                         }
                     }
+                },
+                "computer-configure": {
+                    "safe_interval": 60,
+                    "username": "{{ username }}",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "password",
+                        "template_variables": {
+                            "username": {
+                                "description": "The username to use for the SSH connection",
+                                "type": "text",
+                                "key_display": "SSH username"
+                            }
+                        }
+                    }
                 }
             },
             "codes": {
@@ -344,21 +100,6 @@
         },
         "cpu": {
             "computer": {
-                "computer-configure": {
-                    "safe_interval": 60,
-                    "username": "{{ username }}",
-                    "metadata": {
-                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
-                        "ssh_auth": "password",
-                        "template_variables": {
-                            "username": {
-                                "description": "The username to use for the SSH connection",
-                                "type": "text",
-                                "key_display": "SSH username"
-                            }
-                        }
-                    }
-                },
                 "computer-setup": {
                     "label": "{{ label }}",
                     "hostname": "merlin-l-01.psi.ch",
@@ -402,6 +143,21 @@
                             }
                         }
                     }
+                },
+                "computer-configure": {
+                    "safe_interval": 60,
+                    "username": "{{ username }}",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "password",
+                        "template_variables": {
+                            "username": {
+                                "description": "The username to use for the SSH connection",
+                                "type": "text",
+                                "key_display": "SSH username"
+                            }
+                        }
+                    }
                 }
             },
             "codes": {
@@ -431,5 +187,249 @@
             }
         },
         "default": "gpu"
+    },
+    "daint.cscs.ch": {
+        "gpu": {
+            "computer": {
+                "computer-setup": {
+                    "label": "{{ label }}",
+                    "hostname": "daint.cscs.ch",
+                    "description": "Piz Daint supercomputer at CSCS Lugano, Switzerland, using the GPU nodes. HyperThreading is off",
+                    "transport": "core.ssh",
+                    "scheduler": "core.slurm",
+                    "shebang": "#!/bin/bash -l",
+                    "mpiprocs_per_machine": 12,
+                    "num_cores_per_mpiproc": 1,
+                    "queue_name": "normal",
+                    "work_dir": "/scratch/snx3000/{username}/aiida/",
+                    "mpirun_command": "srun -n {tot_num_mpiprocs}",
+                    "prepend_text": "### computer prepend_text start ###\n#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=gpu\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nexport CRAY_CUDA_MPS=1\nulimit -s unlimited\n### computer prepend_text end ###",
+                    "metadata": {
+                        "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, <a href=\"/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb\" target=\"_blank\">use the MFA CSCS app</a> to set SSH connection.\n</p>\n",
+                        "template_variables": {
+                            "label": {
+                                "default": "daint-gpu",
+                                "description": "A short name to identify the computer",
+                                "type": "text",
+                                "key_display": "Computer Label"
+                            },
+                            "slurm_partition": {
+                                "default": "normal",
+                                "description": "The slurm partition to submit jobs to",
+                                "type": "list",
+                                "options": [
+                                    "normal",
+                                    "debug",
+                                    "large",
+                                    "long",
+                                    "low",
+                                    "prepost"
+                                ],
+                                "key_display": "Slurm partition"
+                            },
+                            "slurm_account": {
+                                "description": "The slurm account to submit jobs to",
+                                "type": "text",
+                                "key_display": "Slurm account"
+                            },
+                            "multithreading": {
+                                "default": "nomultithread",
+                                "description": "The multithreading hint",
+                                "type": "list",
+                                "options": [
+                                    "nomultithread",
+                                    "multithread"
+                                ],
+                                "key_display": "Multithreading hint"
+                            }
+                        }
+                    }
+                },
+                "computer-configure": {
+                    "username": "{{ username }}",
+                    "safe_interval": 10,
+                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
+                    "key_filename": "~/.ssh/cscs-key",
+                    "key_policy": "AutoAddPolicy",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "2FA",
+                        "template_variables": {
+                            "username": {
+                                "description": "The username to use for the SSH connection",
+                                "type": "text",
+                                "key_display": "SSH username"
+                            }
+                        }
+                    }
+                }
+            },
+            "codes": {
+                "SIRIUS-PW": {
+                    "label": "sirius-pw",
+                    "description": "SIRIUS-enabled Quantum ESPRESSO v7.2 pw.x ;",
+                    "default_calc_job_plugin": "quantumespresso.pw",
+                    "filepath_executable": "/apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x",
+                    "prepend_text": "module load daint-gpu",
+                    "append_text": " "
+                },
+                "cp2k-9.1": {
+                    "label": "cp2k-9.1",
+                    "description": "CP2K compiled for daint-gpu",
+                    "default_calc_job_plugin": "cp2k",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-gpu/software/CP2K/9.1-CrayGNU-21.09-cuda/bin/cp2k.psmp",
+                    "prepend_text": "module load daint-gpu\nmodule load CP2K\n",
+                    "append_text": " "
+                },
+                "QuantumESPRESSO": {
+                    "label": "{{ code_binary_name }}-{{ version }}}}",
+                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint",
+                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
+                    "filepath_executable": "/apps/daint/UES/jenkins/7.0.UP03/21.09/daint-gpu/software/QuantumESPRESSO/{{ version }}-CrayNvidia-21.09/bin/{{ code_binary_name }}.x",
+                    "prepend_text": "module load daint-gpu\nmodule load QuantumESPRESSO\n",
+                    "append_text": " ",
+                    "metadata": {
+                        "template_variables": {
+                            "code_binary_name": {
+                                "type": "list",
+                                "key_display": "Code name",
+                                "options": [
+                                    "pw",
+                                    "ph",
+                                    "dos",
+                                    "projwfc"
+                                ]
+                            },
+                            "version": {
+                                "type": "list",
+                                "key_display": "QE version",
+                                "options": [
+                                    "7.0",
+                                    "7.1",
+                                    "7.2"
+                                ],
+                                "default": "7.2"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "mc": {
+            "computer": {
+                "computer-setup": {
+                    "label": "{{ label }}",
+                    "hostname": "daint.cscs.ch",
+                    "description": "Piz Daint supercomputer at CSCS Lugano, Switzerland, multicore partition.",
+                    "transport": "core.ssh",
+                    "scheduler": "core.slurm",
+                    "work_dir": "/scratch/snx3000/{username}/aiida_run/",
+                    "shebang": "#!/bin/bash",
+                    "mpirun_command": "srun -n {tot_num_mpiprocs}",
+                    "mpiprocs_per_machine": 36,
+                    "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nsource $MODULESHOME/init/bash\nulimit -s unlimited",
+                    "metadata": {
+                        "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, <a href=\"/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb\" target=\"_blank\">use the MFA CSCS app</a> to set SSH connection.\n</p>\n",
+                        "template_variables": {
+                            "label": {
+                                "default": "daint-mc",
+                                "description": "A short name to identify the computer",
+                                "type": "text",
+                                "key_display": "Computer Label"
+                            },
+                            "slurm_partition": {
+                                "default": "normal",
+                                "description": "The slurm partition to submit jobs to",
+                                "type": "list",
+                                "options": [
+                                    "normal",
+                                    "debug",
+                                    "large",
+                                    "long",
+                                    "low",
+                                    "prepost"
+                                ],
+                                "key_display": "Slurm partition"
+                            },
+                            "slurm_account": {
+                                "description": "The slurm account to submit jobs to",
+                                "type": "text",
+                                "key_display": "Slurm account"
+                            },
+                            "multithreading": {
+                                "default": "nomultithread",
+                                "description": "The multithreading hint",
+                                "type": "list",
+                                "options": [
+                                    "nomultithread",
+                                    "multithread"
+                                ],
+                                "key_display": "Multithreading hint"
+                            }
+                        }
+                    }
+                },
+                "computer-configure": {
+                    "username": "{{ username }}",
+                    "safe_interval": 10,
+                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
+                    "key_filename": "~/.ssh/cscs-key",
+                    "key_policy": "AutoAddPolicy",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "2FA",
+                        "template_variables": {
+                            "username": {
+                                "description": "The username to use for the SSH connection",
+                                "type": "text",
+                                "key_display": "SSH username"
+                            }
+                        }
+                    }
+                }
+            },
+            "codes": {
+                "cp2k-9.1": {
+                    "label": "cp2k-9.1",
+                    "description": "CP2K 9.1 compiled by CSCS",
+                    "default_calc_job_plugin": "cp2k",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/CP2K/9.1-CrayGNU-21.09/bin/cp2k.psmp",
+                    "prepend_text": "module load daint-mc\nmodule load CP2K\n",
+                    "append_text": " "
+                },
+                "QuantumESPRESSO": {
+                    "label": "{{ code_binary_name }}-{{ version }}",
+                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
+                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/{{ version }}-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
+                    "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
+                    "append_text": "",
+                    "metadata": {
+                        "template_variables": {
+                            "code_binary_name": {
+                                "key_display": "Code name",
+                                "type": "list",
+                                "options": [
+                                    "pw",
+                                    "ph",
+                                    "dos",
+                                    "projwfc"
+                                ]
+                            },
+                            "version": {
+                                "type": "list",
+                                "key_display": "QE version",
+                                "options": [
+                                    "7.0",
+                                    "7.1"
+                                ],
+                                "default": "7.1"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "default": "mc"
     }
 }
