@@ -1,0 +1,11 @@
+---
+label: cp2k-psmp-9.1
+description: CP2K 9.1 compiled by CSCS with cpeGNU 22.05
+default_calc_job_plugin: cp2k
+filepath_executable: /capstor/apps/cscs/eiger/easybuild/software/CP2K/9.1-cpeGNU-22.05/bin/cp2k.psmp
+prepend_text: |
+    module load cray/22.05  cpeGNU/22.05
+    module load CP2K/9.1
+
+    export OMP_NUM_THREADS=1
+append_text: ' '
