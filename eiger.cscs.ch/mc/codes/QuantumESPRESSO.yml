@@ -1,0 +1,26 @@
+---
+label: '{{ code_binary_name }}-{{ version }}'
+description: The code {{ code_binary_name }} of Quantum ESPRESSO compiled for eiger-mc
+default_calc_job_plugin: quantumespresso.{{ code_binary_name }}
+filepath_executable: /capstor/apps/cscs/eiger/easybuild/software/QuantumESPRESSO/{{ version }}-cpeIntel-22.05/bin/{{ code_binary_name }}.x
+prepend_text: |
+    module load cray/22.05  cpeIntel/22.05
+    module load QuantumESPRESSO/{{ version }}
+append_text: ''
+metadata:
+    template_variables:
+        code_binary_name:
+            key_display: Code name
+            type: list
+            options:
+                - pw
+                - ph
+                - dos
+                - projwfc
+        version:
+            type: list
+            key_display: QE version
+            options:
+                - '7.0'
+                - '7.2'
+            default: '7.2'

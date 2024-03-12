@@ -1,0 +1,56 @@
+---
+label: '{{ label }}'
+hostname: eiger.cscs.ch
+description: Piz Eiger supercomputer at CSCS Lugano, Switzerland, multicore partition.
+transport: core.ssh
+scheduler: core.slurm
+work_dir: /capstor/scratch/cscs/{username}/aiida/
+shebang: '#!/bin/bash'
+mpirun_command: srun -n {tot_num_mpiprocs}
+mpiprocs_per_machine: 128
+prepend_text: |-
+    #SBATCH --partition={{ slurm_partition }}
+    #SBATCH --account={{ slurm_account }}
+    #SBATCH --constraint=mc
+    #SBATCH --cpus-per-task=1
+    #SBATCH --hint={{ multithreading }}
+
+    export OMP_PROC_BIND=close
+    export OMP_PLACES=cores
+metadata:
+    tooltip: |
+        <p>
+            <a href="https://user.cscs.ch/access/running/piz_eiger/" target="_blank">Piz Eiger</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>
+            The CSCS now require MFA to login, please check the <a href="https://user.cscs.ch/access/auth/mfa/" target="_blank">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>
+            If you are using the AiiDAlab, <a href="/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb" target="_blank">use the MFA CSCS app</a> to set SSH connection.
+        </p>
+    template_variables:
+        label:
+            default: eiger-mc
+            description: A short name to identify the computer
+            type: text
+            key_display: Computer Label
+        slurm_partition:
+            default: normal
+            description: The slurm partition to submit jobs to
+            type: list
+            options:
+                - normal
+                - debug
+                - large
+                - long
+                - low
+                - prepost
+            key_display: Slurm partition
+        slurm_account:
+            description: The slurm account to submit jobs to
+            type: text
+            key_display: Slurm account
+        multithreading:
+            default: nomultithread
+            description: The multithreading hint
+            type: list
+            options:
+                - nomultithread
+                - multithread
+            key_display: Multithreading hint
