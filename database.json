@@ -275,8 +275,8 @@
                     "label": "{{ code_binary_name }}-{{ version }}",
                     "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for eiger-mc",
                     "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
-                    "filepath_executable": "/capstor/apps/cscs/eiger/easybuild/software/QuantumESPRESSO/{{ version }}-cpeIntel-22.05/bin/{{ code_binary_name }}.x",
-                    "prepend_text": "module load cray/22.05  cpeIntel/22.05\nmodule load QuantumESPRESSO/{{ version }}\n",
+                    "filepath_executable": "/capstor/apps/cscs/eiger/easybuild/software/QuantumESPRESSO/{{ version }}-cpeIntel-21.12/bin/{{ code_binary_name }}.x",
+                    "prepend_text": "module load cray/21.12  cpeIntel/21.12\nmodule load QuantumESPRESSO/{{ version }}\n",
                     "append_text": "",
                     "metadata": {
                         "template_variables": {
