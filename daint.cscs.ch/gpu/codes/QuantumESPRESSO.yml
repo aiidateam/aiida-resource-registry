@@ -1,5 +1,5 @@
 ---
-label: '{{ code_binary_name }}-{{ version }}}}'
+label: '{{ code_binary_name }}-{{ version }}'
 description: The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint
 default_calc_job_plugin: quantumespresso.{{ code_binary_name }}
 filepath_executable: /apps/daint/UES/jenkins/7.0.UP03/21.09/daint-gpu/software/QuantumESPRESSO/{{ version }}-CrayNvidia-21.09/bin/{{ code_binary_name }}.x
