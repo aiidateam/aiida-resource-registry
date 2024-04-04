@@ -15,6 +15,7 @@ metadata:
             type: list
             options:
                 - pw
+                - pp
                 - ph
                 - dos
                 - projwfc
