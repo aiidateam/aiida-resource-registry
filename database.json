@@ -87,6 +87,7 @@
                                 "type": "list",
                                 "options": [
                                     "pw",
+                                    "pp",
                                     "ph",
                                     "dos",
                                     "projwfc",
@@ -175,6 +176,7 @@
                                 "type": "list",
                                 "options": [
                                     "pw",
+                                    "pp",
                                     "ph",
                                     "dos",
                                     "projwfc",
@@ -285,6 +287,7 @@
                                 "type": "list",
                                 "options": [
                                     "pw",
+                                    "pp",
                                     "ph",
                                     "dos",
                                     "projwfc"
@@ -405,6 +408,7 @@
                                 "key_display": "Code name",
                                 "options": [
                                     "pw",
+                                    "pp",
                                     "ph",
                                     "dos",
                                     "projwfc"
@@ -445,6 +449,7 @@
                                 "key_display": "Code name",
                                 "options": [
                                     "pw",
+                                    "pp",
                                     "ph",
                                     "dos",
                                     "projwfc"
@@ -561,6 +566,7 @@
                                 "type": "list",
                                 "options": [
                                     "pw",
+                                    "pp",
                                     "ph",
                                     "dos",
                                     "projwfc"
