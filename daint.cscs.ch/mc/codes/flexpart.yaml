@@ -1,0 +1,28 @@
+---
+label: flexpart_{{model}}
+description: ""
+default_calc_job_plugin: flexpart.{{model}}
+filepath_executable:  /users/lfernand/flexpart/bin/FLEXPART_main_daint_GNUoptompncdfout
+                     #/users/lfernand/flexpart_ifs_empa/bin/FLEXPART91IFS_omp
+prepend_text: |
+
+    export OMP_STACKSIZE=100M
+    module load daint-mc
+    module switch PrgEnv-cray PrgEnv-gnu
+    module switch gcc/11.2.0 gcc/9.3.0
+    module load cray-netcdf
+    module use /store/empa/em05/shenne/easybuild/modules/all
+    module load ecCodes/2.19.0-CrayGNU-21.09
+    export ECCODES_DEFINITION_PATH=${HOME}/resources/eccodes_definitions_cosmo
+
+append_text: ''
+
+metadata:
+    template_variables:
+        model:
+            key_display: model
+            type: list
+            options:
+                - flexpart
+                - ifs
+

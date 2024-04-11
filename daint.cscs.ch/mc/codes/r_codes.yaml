@@ -1,0 +1,37 @@
+---
+label: 'R-{{name}}'
+description: ''
+default_calc_job_plugin: r.{{name}}
+filepath_executable: '/users/shenne/progs/Rflexpart/exec/FLEXPART.totalFootprint.only.R'
+                                                        #collect.sensitivities.from.AiiDA.R'
+computer: daint
+prepend_text: |
+    #SBATCH --job-name=Rpost
+    #SBATCH --partition=prepost
+    #SBATCH --nodes=1
+    #SBATCH --ntasks-per-core=2
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --cpus-per-task=72
+    #SBATCH --time=00:30:00
+
+    module load daint-mc
+    module switch PrgEnv-cray PrgEnv-gnu
+    module switch gcc/11.2.0 gcc/9.3.0
+    module load cray-netcdf
+    module use /store/empa/em05/shenne/easybuild/modules/all
+    module load ecCodes/2.19.0-CrayGNU-21.09
+    module load cray-R/3.6.3.1
+    export R_LIBS=/users/shenne/R/x86_64-suse-linux-gnu-library/3.6
+    export HDF5_USE_FILE_LOCKING=FALSE
+
+append_text: ""
+
+
+metadata:
+    template_variables:
+        model:
+            key_display: model
+            type: list
+            options:
+                - post
+                - collect
