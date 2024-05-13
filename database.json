@@ -316,6 +316,27 @@
                         }
                     }
                 },
+                "cp2k-postprocess": {
+                    "label": "{{ code_name }}",
+                    "description": "Postprocessing of CP2K output files using the {{ code_name }} code from the cp2k-spm-tools.",
+                    "default_calc_job_plugin": "nanotech_empa.{{ code_name }}",
+                    "filepath_executable": "/apps/empa/205-apps/cp2k-spm-tools/{{ code_name }}_from_wfn.py",
+                    "prepend_text": "module load cray-python\nexport PYTHONPATH=$PYTHONPATH:\"/apps/empa/205-apps/ase\"\n",
+                    "append_text": "",
+                    "metadata": {
+                        "template_variables": {
+                            "code_name": {
+                                "type": "list",
+                                "key_display": "Code name",
+                                "options": [
+                                    "stm",
+                                    "overlap",
+                                    "hrstm"
+                                ]
+                            }
+                        }
+                    }
+                },
                 "QuantumESPRESSO": {
                     "label": "{{ code_binary_name }}-{{ version }}",
                     "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint",
