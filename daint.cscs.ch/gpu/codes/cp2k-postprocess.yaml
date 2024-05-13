@@ -2,7 +2,7 @@
 label: '{{ code_name }}'
 description: Postprocessing of CP2K output files using the {{ code_name }} code from the cp2k-spm-tools.
 default_calc_job_plugin: nanotech_empa.{{ code_name }}
-filepath_executable: /apps/empa/205-soft/cp2k-spm-tools/{{ code_name }}.py
+filepath_executable: /apps/empa/205-apps/cp2k-spm-tools/{{ code_name }}_from_wfn.py
 prepend_text: |
     module load cray-python
     export PYTHONPATH=$PYTHONPATH:"/apps/empa/205-apps/ase"
