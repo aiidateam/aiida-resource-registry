@@ -1,0 +1,25 @@
+---
+label: check-{{model}}-data
+description: ''
+default_calc_job_plugin: core.shells
+filepath_executable: '/users/lfernand/flexpart_processing_chain/scripts/check_{{model}}_data.bash'
+prepend_text: |
+        module load daint-mc
+        module switch PrgEnv-cray PrgEnv-gnu
+        module switch gcc/11.2.0 gcc/9.3.0
+        module load cray-netcdf
+        module use /store/empa/em05/shenne/easybuild/modules/all
+        module load ecCodes/2.19.0-CrayGNU-21.09
+        export ECCODES_DEFINITION_PATH=$HOME/resources/eccodes_definitions_cosmo
+        export GRIB_API=/store/empa/em05/shenne/easybuild/software/ecCodes/2.19.0-CrayGNU-21.09
+        export NETCDF=/opt/cray/pe/netcdf/4.7.4.0/GNU/8.2
+append_text: "" 
+
+metadata:
+    template_variables:
+        model:
+            key_display: Model
+            type: list
+            options:
+                - cosmo
+                - ifs

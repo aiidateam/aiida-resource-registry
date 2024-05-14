@@ -1,0 +1,11 @@
+---
+label: daint-direct-106
+hostname: daint106.cscs.ch
+description: Piz Daint supercomputer at CSCS Lugano, Switzerland, using the hybrid partition.
+transport: core.ssh
+scheduler: core.direct
+shebang: '#!/bin/bash -l'
+mpiprocs_per_machine: 72
+work_dir: /scratch/snx3000/{username}/aiida/
+mpirun_command: srun -n {tot_num_mpiprocs}
+prepend_text: ""
