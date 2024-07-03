@@ -1,6 +1,6 @@
 ---
 label: '{{ code_binary_name }}-7.0'
-description: The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc
+description: The code {{ code_binary_name }} of Quantum ESPRESSO compiled for merlin-psi cluster, GPU partition.
 default_calc_job_plugin: quantumespresso.{{ code_binary_name }}
 filepath_executable: /opt/psi/MPI/qe/7.0/openmpi/4.1.3_slurm/gcc/11.2.0/bin/{{ code_binary_name }}.x
 prepend_text: |
