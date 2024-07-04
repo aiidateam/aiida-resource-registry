@@ -482,6 +482,19 @@
                 }
             },
             "codes": {
+                "phonopy-2.20.0": {
+                    "label": "phonopy-2.20.0",
+                    "computer": "merlin6-cpu",
+                    "default_calc_job_plugin": "phonopy.phonopy",
+                    "description": "The phonopy code containerized mainly for merlin-psi cluster, CPU partition.",
+                    "engine_command": "apptainer exec {image_name}",
+                    "filepath_executable": "/opt/conda/bin/phonopy",
+                    "image_name": "docker://mikibonacci/phonopy-2.20.0:amd64",
+                    "prepend_text": "export APPTAINER_BINDPATH=$PWD",
+                    "append_text": "",
+                    "use_double_quotes": false,
+                    "wrap_cmdline_params": false
+                },
                 "QuantumESPRESSO-7.3": {
                     "label": "{{ code_binary_name }}-7.3",
                     "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for merlin-psi cluster, CPU partition.",

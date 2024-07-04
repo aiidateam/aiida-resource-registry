@@ -233,7 +233,7 @@
                 "prepend_text",
                 "append_text"
             ],
-            "additionalProperties": false,
+            "additionalProperties": true,
             "title": "Code"
         }
     }
