@@ -10,10 +10,3 @@ prepend_text: export APPTAINER_BINDPATH=$PWD
 append_text: ''
 use_double_quotes: false
 wrap_cmdline_params: false
-metadata:
-    template_variables:
-        code_binary_name:
-            key_display: Code name
-            type: list
-            options:
-                - phonopy
