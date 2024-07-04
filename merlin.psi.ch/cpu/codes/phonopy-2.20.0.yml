@@ -1,5 +1,5 @@
 ---
-label: 'phonopy-2.20.0'
+label: phonopy-2.20.0
 computer: merlin6-cpu
 default_calc_job_plugin: phonopy.phonopy
 description: The phonopy code containerized mainly for merlin-psi cluster, CPU partition.
