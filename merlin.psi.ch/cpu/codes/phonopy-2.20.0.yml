@@ -6,7 +6,7 @@ description: 'The phonopy code containerized mainly for merlin-psi cluster, CPU 
 engine_command: apptainer exec {image_name}
 filepath_executable: /opt/conda/bin/phonopy
 image_name: docker://mikibonacci/phonopy-2.20.0:amd64
-prepend_text: 'export APPTAINER_BINDPATH=$PWD'
+prepend_text: export APPTAINER_BINDPATH=$PWD
 append_text: ''
 use_double_quotes: 'False'
 wrap_cmdline_params: 'False'
