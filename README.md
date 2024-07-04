@@ -20,7 +20,6 @@ The easiest way to set up a computer and code is to use the resource setup widge
 
 <!-- Placeholder for the gif screen record -->
 
-
 ## Contributing to this repository
 
 We highly appreciate help in keeping the configurations up to date and adding new simulation codes & computers.
@@ -32,6 +31,6 @@ We highly appreciate help in keeping the configurations up to date and adding ne
  In order to test if your configuration and file/folder structure is correct, you can generate the JSON files locally:
 
 ```bash
-pip install -r scripts/requirements.txt
-python scripts/generate_json.py
+pip install -r gh_page/requirements.txt
+python gh_page/generate_json.py
 ```

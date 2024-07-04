@@ -195,7 +195,7 @@
             }
         },
         "required": ["label", "description", "default_calc_job_plugin", "filepath_executable", "prepend_text", "append_text"],
-        "additionalProperties": false,
+        "additionalProperties": true,
         "title": "Code"
     }
   }
