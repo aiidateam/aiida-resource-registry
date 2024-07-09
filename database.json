@@ -294,6 +294,26 @@
                     "filepath_executable": "/apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x",
                     "prepend_text": "module load daint-gpu",
                     "append_text": " "
+                },
+                "ppafm": {
+                    "label": "{{ code_name }}",
+                    "description": "PPAFM code https://github.com/Probe-Particle/ppafm.git",
+                    "default_calc_job_plugin": "nanotech_empa.afm",
+                    "filepath_executable": "/users/cpi/aiida-soft/run_{{ code_name }}.sh",
+                    "prepend_text": "export PATH=\"/users/cpi/miniconda3/bin:$PATH\"\neval \"$(conda shell.posix hook)\"\neconda activate /users/cpi/miniconda3/envs/env-{{ code_name }}\n",
+                    "append_text": "",
+                    "metadata": {
+                        "template_variables": {
+                            "code_name": {
+                                "type": "list",
+                                "key_display": "Code name",
+                                "options": [
+                                    "ppafm",
+                                    "2ppafm"
+                                ]
+                            }
+                        }
+                    }
                 }
             }
         },
