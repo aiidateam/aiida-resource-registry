@@ -642,7 +642,7 @@
                     "description": "PPAFM code https://github.com/Probe-Particle/ppafm.git",
                     "default_calc_job_plugin": "nanotech_empa.afm",
                     "filepath_executable": "/users/cpi/aiida-soft/run_{{ code_name }}.sh",
-                    "prepend_text": "export PATH=\"/users/cpi/miniconda3/bin:$PATH\"\neval \"$(conda shell.posix hook)\"\neconda activate /users/cpi/miniconda3/envs/env-{{ code_name }}\n",
+                    "prepend_text": "export PATH=\"/users/cpi/miniconda3/bin:$PATH\"\neval \"$(conda shell.posix hook)\"\nconda activate /users/cpi/miniconda3/envs/env-{{ code_name }}\n",
                     "append_text": "",
                     "metadata": {
                         "template_variables": {
