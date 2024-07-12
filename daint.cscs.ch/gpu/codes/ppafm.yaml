@@ -6,7 +6,7 @@ filepath_executable: /users/cpi/aiida-soft/run_{{ code_name }}.sh
 prepend_text: |
     export PATH="/users/cpi/miniconda3/bin:$PATH"
     eval "$(conda shell.posix hook)"
-    econda activate /users/cpi/miniconda3/envs/env-{{ code_name }}
+    conda activate /users/cpi/miniconda3/envs/env-{{ code_name }}
 append_text: ''
 metadata:
     template_variables:
