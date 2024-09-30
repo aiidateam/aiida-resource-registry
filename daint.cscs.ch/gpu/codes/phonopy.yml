@@ -20,5 +20,5 @@ metadata:
             type: list
             key_display: Phonopy version
             options:
-                - '2.20.0'
-            default: '2.20.0'
+                - 2.20.0
+            default: 2.20.0
