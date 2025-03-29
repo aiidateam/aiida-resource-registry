@@ -1,0 +1,14 @@
+---
+safe_interval: 60
+username: '{{ username }}'
+metadata:
+    tooltip: |
+        <p>
+            Setup up the SSH connection.
+        </p>
+    ssh_auth: password
+    template_variables:
+        username:
+            description: The username to use for the SSH connection
+            type: text
+            key_display: SSH username
