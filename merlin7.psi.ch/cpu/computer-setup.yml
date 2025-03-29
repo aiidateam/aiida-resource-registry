@@ -1,7 +1,7 @@
 ---
 label: '{{ label }}'
 hostname: login001.merlin7.psi.ch
-description: Merlin7 HPC at PSI-ALPS (cpu section).
+description: Merlin7 HPC at PSI-ALPS (only cpu section).
 transport: core.ssh
 scheduler: core.slurm
 work_dir: /data/scratch/shared/{username}/aiida_run/
