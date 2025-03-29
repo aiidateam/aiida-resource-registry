@@ -2,12 +2,13 @@
 label: '{{ code_binary_name }}-7.4'
 description: The code {{ code_binary_name }} of Quantum ESPRESSO compiled for merlin7-psi cluster, CPU partition.
 default_calc_job_plugin: quantumespresso.{{ code_binary_name }}
-filepath_executable: /afs/psi.ch/sys/spack/develop/opt/spack/unstable/linux-sles15-x86_64/gcc-12.3/quantum-espresso-7.4.0-m7bevi7domss3apkn77nwtdv4n56dqu5/bin/{{ code_binary_name }}.x
+filepath_executable: /afs/psi.ch/sys/spack/develop/opt/spack/unstable/linux-sles15-x86_64/gcc-12.3/quantum-espresso-7.4.0-m7bevi7domss3apkn77nwtdv4n56dqu5/bin/{{
+    code_binary_name }}.x
 prepend_text: |
-  module purge
-  module use unstable
-  module use Spack
-  module load gcc/12.3 openmpi/main-syah quantum-espresso/7.4.0-m7be-omp
+    module purge
+    module use unstable
+    module use Spack
+    module load gcc/12.3 openmpi/main-syah quantum-espresso/7.4.0-m7be-omp
 append_text: ''
 metadata:
     template_variables:
