@@ -1,0 +1,48 @@
+---
+label: '{{ label }}'
+hostname: login001.merlin7.psi.ch
+description: Merlin7 HPC at PSI-ALPS (only cpu section).
+transport: core.ssh
+scheduler: core.slurm
+work_dir: /data/scratch/shared/{username}/aiida_run/
+shebang: '#!/bin/bash'
+mpirun_command: srun
+mpiprocs_per_machine: 128
+prepend_text: |-
+    #SBATCH --get-user-env
+    #SBATCH --no-requeue
+    #SBATCH --exclusive
+    #SBATCH --partition={{ slurm_partition }}
+    #SBATCH --hint={{ multithreading }}
+
+    # Set OpenMP environment (if needed)
+
+    export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+metadata:
+    tooltip: |
+        <p>
+            <a href="https://lsm-hpce.gitpages.psi.ch/merlin6/" target="_blank">Merlin7</a> HPC at PSI-ALPS.
+        </p>
+    template_variables:
+        label:
+            default: merlin7-cpu
+            description: A short name to identify the computer
+            type: text
+            key_display: Computer Label
+        slurm_partition:
+            default: daily
+            description: The slurm partition to submit jobs to
+            type: list
+            options:
+                - general
+                - daily
+                - hourly
+            key_display: Slurm partition
+        multithreading:
+            default: nomultithread
+            description: The multithreading hint
+            type: list
+            options:
+                - nomultithread
+                - multithread
+            key_display: Multithreading hint
