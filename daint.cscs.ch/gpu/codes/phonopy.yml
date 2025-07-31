@@ -1,0 +1,24 @@
+---
+label: '{{ code_name }}'
+description: Phonopy
+default_calc_job_plugin: phonopy.phonopy
+filepath_executable: /users/aortega/miniconda3/envs/phonopy/bin/phonopy
+prepend_text: |
+    export PATH="/users/aortega/miniconda3/bin:$PATH"
+    eval "$(conda shell.posix hook)"
+    conda activate /users/aortega/miniconda3/envs/phonopy
+append_text: ''
+metadata:
+    template_variables:
+        code_name:
+            type: list
+            key_display: Code name
+            options:
+                - phonopy
+
+        version:
+            type: list
+            key_display: Phonopy version
+            options:
+                - 2.20.0
+            default: 2.20.0
