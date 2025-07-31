@@ -6,8 +6,6 @@ transport: core.ssh
 scheduler: core.slurm
 shebang: '#!/bin/bash -l'
 mpiprocs_per_machine: 12
-num_cores_per_mpiproc: 1
-queue_name: normal
 work_dir: /scratch/snx3000/{username}/aiida/
 mpirun_command: srun -n {tot_num_mpiprocs}
 prepend_text: |-
