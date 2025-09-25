@@ -1,11 +1,11 @@
 {
-    "daint.cscs.ch": {
+    "eiger.cscs.ch": {
         "mc": {
             "computer": {
                 "computer-configure": {
                     "username": "{{ username }}",
                     "safe_interval": 10,
-                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
+                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat eiger.cscs.ch 22",
                     "key_filename": "~/.ssh/cscs-key",
                     "key_policy": "AutoAddPolicy",
                     "metadata": {
@@ -22,20 +22,20 @@
                 },
                 "computer-setup": {
                     "label": "{{ label }}",
-                    "hostname": "daint.cscs.ch",
-                    "description": "Piz Daint supercomputer at CSCS Lugano, Switzerland, multicore partition.",
+                    "hostname": "eiger.cscs.ch",
+                    "description": "Piz Eiger supercomputer at CSCS Lugano, Switzerland, multicore partition.",
                     "transport": "core.ssh",
                     "scheduler": "core.slurm",
-                    "work_dir": "/scratch/snx3000/{username}/aiida_run/",
+                    "work_dir": "/capstor/scratch/cscs/{username}/aiida/",
                     "shebang": "#!/bin/bash",
                     "mpirun_command": "srun -n {tot_num_mpiprocs}",
-                    "mpiprocs_per_machine": 36,
-                    "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nsource $MODULESHOME/init/bash\nulimit -s unlimited",
+                    "mpiprocs_per_machine": 128,
+                    "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_PROC_BIND=close\nexport OMP_PLACES=cores",
                     "metadata": {
-                        "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, <a href=\"/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb\" target=\"_blank\">use the MFA CSCS app</a> to set SSH connection.\n</p>\n",
+                        "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_eiger/\" target=\"_blank\">Piz Eiger</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, <a href=\"/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb\" target=\"_blank\">use the MFA CSCS app</a> to set SSH connection.\n</p>\n",
                         "template_variables": {
                             "label": {
-                                "default": "daint-mc",
+                                "default": "eiger-mc",
                                 "description": "A short name to identify the computer",
                                 "type": "text",
                                 "key_display": "Computer Label"
@@ -74,20 +74,12 @@
                 }
             },
             "codes": {
-                "cp2k-9.1": {
-                    "label": "cp2k-9.1",
-                    "description": "CP2K 9.1 compiled by CSCS",
-                    "default_calc_job_plugin": "cp2k",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/CP2K/9.1-CrayGNU-21.09/bin/cp2k.psmp",
-                    "prepend_text": "module load daint-mc\nmodule load CP2K\n",
-                    "append_text": " "
-                },
                 "QuantumESPRESSO": {
                     "label": "{{ code_binary_name }}-{{ version }}",
-                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
+                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for eiger-mc",
                     "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
-                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/{{ version }}-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
-                    "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
+                    "filepath_executable": "/capstor/apps/cscs/pilatus/easybuild/software/QuantumESPRESSO/{{ version }}-cpeIntel-23.12/bin/{{ code_binary_name }}.x",
+                    "prepend_text": "module load cray/23.12\nmodule load cpeIntel/23.12\nmodule load QuantumESPRESSO/{{ version }}\n",
                     "append_text": "",
                     "metadata": {
                         "template_variables": {
@@ -106,16 +98,26 @@
                                 "type": "list",
                                 "key_display": "QE version",
                                 "options": [
-                                    "7.0",
-                                    "7.1"
+                                    "7.2"
                                 ],
-                                "default": "7.1"
+                                "default": "7.2"
                             }
                         }
                     }
+                },
+                "cp2k-9.1": {
+                    "label": "cp2k-psmp-9.1",
+                    "description": "CP2K 9.1 compiled by CSCS with cpeGNU 22.05",
+                    "default_calc_job_plugin": "cp2k",
+                    "filepath_executable": "/capstor/apps/cscs/eiger/easybuild/software/CP2K/9.1-cpeGNU-22.05/bin/cp2k.psmp",
+                    "prepend_text": "module load cray/22.05  cpeGNU/22.05\nmodule load CP2K/9.1\n\nexport OMP_NUM_THREADS=1\n",
+                    "append_text": " "
                 }
             }
         },
+        "default": "mc"
+    },
+    "daint.cscs.ch": {
         "gpu": {
             "computer": {
                 "computer-configure": {
@@ -192,6 +194,39 @@
                 }
             },
             "codes": {
+                "QuantumESPRESSO": {
+                    "label": "{{ code_binary_name }}-{{ version }}",
+                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint",
+                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
+                    "filepath_executable": "/apps/daint/UES/jenkins/7.0.UP03/21.09/daint-gpu/software/QuantumESPRESSO/{{ version }}-CrayNvidia-21.09/bin/{{ code_binary_name }}.x",
+                    "prepend_text": "module load daint-gpu\nmodule load QuantumESPRESSO\n",
+                    "append_text": " ",
+                    "metadata": {
+                        "template_variables": {
+                            "code_binary_name": {
+                                "type": "list",
+                                "key_display": "Code name",
+                                "options": [
+                                    "pw",
+                                    "pp",
+                                    "ph",
+                                    "dos",
+                                    "projwfc"
+                                ]
+                            },
+                            "version": {
+                                "type": "list",
+                                "key_display": "QE version",
+                                "options": [
+                                    "7.0",
+                                    "7.1",
+                                    "7.2"
+                                ],
+                                "default": "7.2"
+                            }
+                        }
+                    }
+                },
                 "cp2k-9.1": {
                     "label": "cp2k-9.1",
                     "description": "CP2K compiled for daint-gpu",
@@ -200,13 +235,46 @@
                     "prepend_text": "module load daint-gpu\nmodule load CP2K\n",
                     "append_text": " "
                 },
-                "SIRIUS-PW": {
-                    "label": "sirius-pw",
-                    "description": "SIRIUS-enabled Quantum ESPRESSO v7.2 pw.x ;",
-                    "default_calc_job_plugin": "quantumespresso.pw",
-                    "filepath_executable": "/apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x",
-                    "prepend_text": "module load daint-gpu",
-                    "append_text": " "
+                "cp2k-postprocess": {
+                    "label": "{{ code_name }}",
+                    "description": "Postprocessing of CP2K output files using the {{ code_name }} code from the cp2k-spm-tools.",
+                    "default_calc_job_plugin": "nanotech_empa.{{ code_name }}",
+                    "filepath_executable": "/apps/empa/205-apps/cp2k-spm-tools/{{ code_name }}_from_wfn.py",
+                    "prepend_text": "module load cray-python\nexport PYTHONPATH=$PYTHONPATH:\"/apps/empa/205-apps/ase\"\n",
+                    "append_text": "",
+                    "metadata": {
+                        "template_variables": {
+                            "code_name": {
+                                "type": "list",
+                                "key_display": "Code name",
+                                "options": [
+                                    "stm",
+                                    "overlap",
+                                    "hrstm"
+                                ]
+                            }
+                        }
+                    }
+                },
+                "ppafm": {
+                    "label": "{{ code_name }}",
+                    "description": "PPAFM code https://github.com/Probe-Particle/ppafm.git",
+                    "default_calc_job_plugin": "nanotech_empa.afm",
+                    "filepath_executable": "/users/cpi/aiida-soft/run_{{ code_name }}.sh",
+                    "prepend_text": "export PATH=\"/users/cpi/miniconda3/bin:$PATH\"\neval \"$(conda shell.posix hook)\"\nconda activate /users/cpi/miniconda3/envs/env-{{ code_name }}\n",
+                    "append_text": "",
+                    "metadata": {
+                        "template_variables": {
+                            "code_name": {
+                                "type": "list",
+                                "key_display": "Code name",
+                                "options": [
+                                    "ppafm",
+                                    "2ppafm"
+                                ]
+                            }
+                        }
+                    }
                 },
                 "QuantumESPRESSO-CPU": {
                     "label": "{{ code_binary_name }}-{{ version }}",
@@ -241,18 +309,102 @@
                         }
                     }
                 },
+                "SIRIUS-PW": {
+                    "label": "sirius-pw",
+                    "description": "SIRIUS-enabled Quantum ESPRESSO v7.2 pw.x ;",
+                    "default_calc_job_plugin": "quantumespresso.pw",
+                    "filepath_executable": "/apps/daint/SSL/simonpi/spack-views/q-e-sirius-nlcg/.spack-env/view/bin/pw.x",
+                    "prepend_text": "module load daint-gpu",
+                    "append_text": " "
+                }
+            }
+        },
+        "mc": {
+            "computer": {
+                "computer-configure": {
+                    "username": "{{ username }}",
+                    "safe_interval": 10,
+                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat daint.cscs.ch 22",
+                    "key_filename": "~/.ssh/cscs-key",
+                    "key_policy": "AutoAddPolicy",
+                    "metadata": {
+                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
+                        "ssh_auth": "2FA",
+                        "template_variables": {
+                            "username": {
+                                "description": "The username to use for the SSH connection",
+                                "type": "text",
+                                "key_display": "SSH username"
+                            }
+                        }
+                    }
+                },
+                "computer-setup": {
+                    "label": "{{ label }}",
+                    "hostname": "daint.cscs.ch",
+                    "description": "Piz Daint supercomputer at CSCS Lugano, Switzerland, multicore partition.",
+                    "transport": "core.ssh",
+                    "scheduler": "core.slurm",
+                    "work_dir": "/scratch/snx3000/{username}/aiida_run/",
+                    "shebang": "#!/bin/bash",
+                    "mpirun_command": "srun -n {tot_num_mpiprocs}",
+                    "mpiprocs_per_machine": 36,
+                    "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK\nsource $MODULESHOME/init/bash\nulimit -s unlimited",
+                    "metadata": {
+                        "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_daint/\" target=\"_blank\">Piz Daint</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, <a href=\"/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb\" target=\"_blank\">use the MFA CSCS app</a> to set SSH connection.\n</p>\n",
+                        "template_variables": {
+                            "label": {
+                                "default": "daint-mc",
+                                "description": "A short name to identify the computer",
+                                "type": "text",
+                                "key_display": "Computer Label"
+                            },
+                            "slurm_partition": {
+                                "default": "normal",
+                                "description": "The slurm partition to submit jobs to",
+                                "type": "list",
+                                "options": [
+                                    "normal",
+                                    "debug",
+                                    "large",
+                                    "long",
+                                    "low",
+                                    "prepost"
+                                ],
+                                "key_display": "Slurm partition"
+                            },
+                            "slurm_account": {
+                                "description": "The slurm account to submit jobs to",
+                                "type": "text",
+                                "key_display": "Slurm account"
+                            },
+                            "multithreading": {
+                                "default": "nomultithread",
+                                "description": "The multithreading hint",
+                                "type": "list",
+                                "options": [
+                                    "nomultithread",
+                                    "multithread"
+                                ],
+                                "key_display": "Multithreading hint"
+                            }
+                        }
+                    }
+                }
+            },
+            "codes": {
                 "QuantumESPRESSO": {
                     "label": "{{ code_binary_name }}-{{ version }}",
-                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for gpu nodes on daint",
+                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for daint-mc",
                     "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
-                    "filepath_executable": "/apps/daint/UES/jenkins/7.0.UP03/21.09/daint-gpu/software/QuantumESPRESSO/{{ version }}-CrayNvidia-21.09/bin/{{ code_binary_name }}.x",
-                    "prepend_text": "module load daint-gpu\nmodule load QuantumESPRESSO\n",
-                    "append_text": " ",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/QuantumESPRESSO/{{ version }}-CrayIntel-21.09/bin/{{ code_binary_name }}.x",
+                    "prepend_text": "module load daint-mc\nmodule load QuantumESPRESSO\n",
+                    "append_text": "",
                     "metadata": {
                         "template_variables": {
                             "code_binary_name": {
-                                "type": "list",
                                 "key_display": "Code name",
+                                "type": "list",
                                 "options": [
                                     "pw",
                                     "pp",
@@ -266,54 +418,20 @@
                                 "key_display": "QE version",
                                 "options": [
                                     "7.0",
-                                    "7.1",
-                                    "7.2"
+                                    "7.1"
                                 ],
-                                "default": "7.2"
+                                "default": "7.1"
                             }
                         }
                     }
                 },
-                "ppafm": {
-                    "label": "{{ code_name }}",
-                    "description": "PPAFM code https://github.com/Probe-Particle/ppafm.git",
-                    "default_calc_job_plugin": "nanotech_empa.afm",
-                    "filepath_executable": "/users/cpi/aiida-soft/run_{{ code_name }}.sh",
-                    "prepend_text": "export PATH=\"/users/cpi/miniconda3/bin:$PATH\"\neval \"$(conda shell.posix hook)\"\nconda activate /users/cpi/miniconda3/envs/env-{{ code_name }}\n",
-                    "append_text": "",
-                    "metadata": {
-                        "template_variables": {
-                            "code_name": {
-                                "type": "list",
-                                "key_display": "Code name",
-                                "options": [
-                                    "ppafm",
-                                    "2ppafm"
-                                ]
-                            }
-                        }
-                    }
-                },
-                "cp2k-postprocess": {
-                    "label": "{{ code_name }}",
-                    "description": "Postprocessing of CP2K output files using the {{ code_name }} code from the cp2k-spm-tools.",
-                    "default_calc_job_plugin": "nanotech_empa.{{ code_name }}",
-                    "filepath_executable": "/apps/empa/205-apps/cp2k-spm-tools/{{ code_name }}_from_wfn.py",
-                    "prepend_text": "module load cray-python\nexport PYTHONPATH=$PYTHONPATH:\"/apps/empa/205-apps/ase\"\n",
-                    "append_text": "",
-                    "metadata": {
-                        "template_variables": {
-                            "code_name": {
-                                "type": "list",
-                                "key_display": "Code name",
-                                "options": [
-                                    "stm",
-                                    "overlap",
-                                    "hrstm"
-                                ]
-                            }
-                        }
-                    }
+                "cp2k-9.1": {
+                    "label": "cp2k-9.1",
+                    "description": "CP2K 9.1 compiled by CSCS",
+                    "default_calc_job_plugin": "cp2k",
+                    "filepath_executable": "/apps/dom/UES/jenkins/7.0.UP03/21.09/dom-mc/software/CP2K/9.1-CrayGNU-21.09/bin/cp2k.psmp",
+                    "prepend_text": "module load daint-mc\nmodule load CP2K\n",
+                    "append_text": " "
                 }
             }
         },
@@ -396,6 +514,19 @@
                     "use_double_quotes": false,
                     "wrap_cmdline_params": false
                 },
+                "python-3.9.13": {
+                    "label": "python-3.9.13",
+                    "computer": "merlin7-cpu",
+                    "default_calc_job_plugin": "pythonjob.pythonjob",
+                    "description": "The python code containerized for merlin7-psi cluster, CPU partition. It ships undi-1.0.0 code for muons.",
+                    "engine_command": "apptainer exec {image_name}",
+                    "filepath_executable": "/opt/conda/bin/python",
+                    "image_name": "docker://mikibonacci/undi-1.0.0:amd64",
+                    "prepend_text": "export APPTAINER_BINDPATH=$PWD",
+                    "append_text": "",
+                    "use_double_quotes": false,
+                    "wrap_cmdline_params": false
+                },
                 "QuantumESPRESSO-7.4": {
                     "label": "{{ code_binary_name }}-7.4",
                     "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for merlin7-psi cluster, CPU partition.",
@@ -419,140 +550,9 @@
                             }
                         }
                     }
-                },
-                "python-3.9.13": {
-                    "label": "python-3.9.13",
-                    "computer": "merlin7-cpu",
-                    "default_calc_job_plugin": "pythonjob.pythonjob",
-                    "description": "The python code containerized for merlin7-psi cluster, CPU partition. It ships undi-1.0.0 code for muons.",
-                    "engine_command": "apptainer exec {image_name}",
-                    "filepath_executable": "/opt/conda/bin/python",
-                    "image_name": "docker://mikibonacci/undi-1.0.0:amd64",
-                    "prepend_text": "export APPTAINER_BINDPATH=$PWD",
-                    "append_text": "",
-                    "use_double_quotes": false,
-                    "wrap_cmdline_params": false
                 }
             }
         },
         "default": "cpu"
-    },
-    "eiger.cscs.ch": {
-        "mc": {
-            "computer": {
-                "computer-configure": {
-                    "username": "{{ username }}",
-                    "safe_interval": 10,
-                    "proxy_command": "ssh -q -Y {{ username }}@ela.cscs.ch netcat eiger.cscs.ch 22",
-                    "key_filename": "~/.ssh/cscs-key",
-                    "key_policy": "AutoAddPolicy",
-                    "metadata": {
-                        "tooltip": "<p>\n    Setup up the SSH connection.\n</p>\n",
-                        "ssh_auth": "2FA",
-                        "template_variables": {
-                            "username": {
-                                "description": "The username to use for the SSH connection",
-                                "type": "text",
-                                "key_display": "SSH username"
-                            }
-                        }
-                    }
-                },
-                "computer-setup": {
-                    "label": "{{ label }}",
-                    "hostname": "eiger.cscs.ch",
-                    "description": "Piz Eiger supercomputer at CSCS Lugano, Switzerland, multicore partition.",
-                    "transport": "core.ssh",
-                    "scheduler": "core.slurm",
-                    "work_dir": "/capstor/scratch/cscs/{username}/aiida/",
-                    "shebang": "#!/bin/bash",
-                    "mpirun_command": "srun -n {tot_num_mpiprocs}",
-                    "mpiprocs_per_machine": 128,
-                    "prepend_text": "#SBATCH --partition={{ slurm_partition }}\n#SBATCH --account={{ slurm_account }}\n#SBATCH --constraint=mc\n#SBATCH --cpus-per-task=1\n#SBATCH --hint={{ multithreading }}\n\nexport OMP_PROC_BIND=close\nexport OMP_PLACES=cores",
-                    "metadata": {
-                        "tooltip": "<p>\n    <a href=\"https://user.cscs.ch/access/running/piz_eiger/\" target=\"_blank\">Piz Eiger</a> supercomputer at CSCS Lugano, Switzerland, hybrid partition. <br>\n    The CSCS now require MFA to login, please check the <a href=\"https://user.cscs.ch/access/auth/mfa/\" target=\"_blank\">MFA CSCS documentation</a> for details on how to set up SSH connection. <br>\n    If you are using the AiiDAlab, <a href=\"/apps/apps/home/open_app.ipynb?app=mfa-cscs&redirect=apps/apps/home/start.ipynb\" target=\"_blank\">use the MFA CSCS app</a> to set SSH connection.\n</p>\n",
-                        "template_variables": {
-                            "label": {
-                                "default": "eiger-mc",
-                                "description": "A short name to identify the computer",
-                                "type": "text",
-                                "key_display": "Computer Label"
-                            },
-                            "slurm_partition": {
-                                "default": "normal",
-                                "description": "The slurm partition to submit jobs to",
-                                "type": "list",
-                                "options": [
-                                    "normal",
-                                    "debug",
-                                    "large",
-                                    "long",
-                                    "low",
-                                    "prepost"
-                                ],
-                                "key_display": "Slurm partition"
-                            },
-                            "slurm_account": {
-                                "description": "The slurm account to submit jobs to",
-                                "type": "text",
-                                "key_display": "Slurm account"
-                            },
-                            "multithreading": {
-                                "default": "nomultithread",
-                                "description": "The multithreading hint",
-                                "type": "list",
-                                "options": [
-                                    "nomultithread",
-                                    "multithread"
-                                ],
-                                "key_display": "Multithreading hint"
-                            }
-                        }
-                    }
-                }
-            },
-            "codes": {
-                "cp2k-9.1": {
-                    "label": "cp2k-psmp-9.1",
-                    "description": "CP2K 9.1 compiled by CSCS with cpeGNU 22.05",
-                    "default_calc_job_plugin": "cp2k",
-                    "filepath_executable": "/capstor/apps/cscs/eiger/easybuild/software/CP2K/9.1-cpeGNU-22.05/bin/cp2k.psmp",
-                    "prepend_text": "module load cray/22.05  cpeGNU/22.05\nmodule load CP2K/9.1\n\nexport OMP_NUM_THREADS=1\n",
-                    "append_text": " "
-                },
-                "QuantumESPRESSO": {
-                    "label": "{{ code_binary_name }}-{{ version }}",
-                    "description": "The code {{ code_binary_name }} of Quantum ESPRESSO compiled for eiger-mc",
-                    "default_calc_job_plugin": "quantumespresso.{{ code_binary_name }}",
-                    "filepath_executable": "/capstor/apps/cscs/pilatus/easybuild/software/QuantumESPRESSO/{{ version }}-cpeIntel-23.12/bin/{{ code_binary_name }}.x",
-                    "prepend_text": "module load cray/23.12\nmodule load cpeIntel/23.12\nmodule load QuantumESPRESSO/{{ version }}\n",
-                    "append_text": "",
-                    "metadata": {
-                        "template_variables": {
-                            "code_binary_name": {
-                                "key_display": "Code name",
-                                "type": "list",
-                                "options": [
-                                    "pw",
-                                    "pp",
-                                    "ph",
-                                    "dos",
-                                    "projwfc"
-                                ]
-                            },
-                            "version": {
-                                "type": "list",
-                                "key_display": "QE version",
-                                "options": [
-                                    "7.2"
-                                ],
-                                "default": "7.2"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "default": "mc"
     }
 }
